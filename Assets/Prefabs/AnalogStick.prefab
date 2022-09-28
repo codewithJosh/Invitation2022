@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 737796659142147850}
   - component: {fileID: 737796659142147847}
   - component: {fileID: 737796659142147844}
-  - component: {fileID: 737796659142147845}
   m_Layer: 5
   m_Name: Stick
   m_TagString: Untagged
@@ -77,20 +76,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &737796659142147845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 737796659142147851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9d677f1681015749b15c436eec6d880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MovementRange: 100
-  m_ControlPath: 
 --- !u!1 &737796660393510987
 GameObject:
   m_ObjectHideFlags: 0
