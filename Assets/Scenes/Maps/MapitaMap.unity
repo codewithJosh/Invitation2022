@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 165206098}
   - component: {fileID: 165206097}
   - component: {fileID: 165206096}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,6 +440,7 @@ GameObject:
   - component: {fileID: 746346109}
   - component: {fileID: 746346108}
   - component: {fileID: 746346107}
+  - component: {fileID: 746346110}
   m_Layer: 5
   m_Name: JumpButton
   m_TagString: Untagged
@@ -549,6 +550,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 746346105}
   m_CullTransparentMesh: 1
+--- !u!114 &746346110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746346105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995f34434fbe45d46aacf4e120446279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button:
+    m_key: Jump
+    value: 0
 --- !u!1 &918790778
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,6 +1153,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1944420979}
   speed: 12
+  gravity: -19.62
+  jumpHeight: 3
+  groundCheck: {fileID: 525396530}
+  groundDistance: 0.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2144614356 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 737796659142147851, guid: 6f744993e5022aa42984f0926762674c, type: 3}
