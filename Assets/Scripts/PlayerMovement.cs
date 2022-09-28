@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    public Joystick joystick;
 
     Vector3 velocity;
     bool isGrounded;
@@ -39,8 +40,8 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        float x = SimpleInput.GetAxis("Horizontal");
-        float z = SimpleInput.GetAxis("Vertical");
+        float x = joystick.Horizontal;
+        float z = joystick.Vertical;
 
         Vector3 move = transform.right * x + transform.forward * z;
 
