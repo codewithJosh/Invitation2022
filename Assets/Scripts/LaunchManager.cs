@@ -22,9 +22,16 @@ public class LaunchManager : MonoBehaviour
         if (timeElapsed > timeDelayed)
         {
 
-            SceneManager.LoadScene(1);
+            OnTapToSkip();
 
         }
+
+    }
+
+    public void OnTapToSkip()
+    {
+
+        SceneManager.LoadScene(1);
 
     }
 
