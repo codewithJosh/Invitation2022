@@ -12,6 +12,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+        if (SimpleInput.GetButtonDown("OnIdleButton"))
+        {
+
+            state = startMenuState.idle;
+
+        }
         if (SimpleInput.GetButtonDown("OnStartButton"))
         {
 
