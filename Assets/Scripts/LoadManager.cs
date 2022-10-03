@@ -12,7 +12,7 @@ public class LoadManager : MonoBehaviour
     private void Start()
     {
 
-        int index = PlayerPrefs.GetInt("index", 1);
+        int index = PlayerPrefs.GetInt("index", 2);
         LoadScene(index);
 
     }
