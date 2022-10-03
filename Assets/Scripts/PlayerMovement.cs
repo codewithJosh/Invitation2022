@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
 
+        canMove = false;
+
     }
 
     // Update is called once per frame

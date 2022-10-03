@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class PlayerManager : MonoBehaviour
@@ -10,7 +9,9 @@ public class PlayerManager : MonoBehaviour
 
     public Vector3 startPosition;
     public int countdownTime;
+    public int timeLeftTime;
     public TextMeshProUGUI countdown;
+    public TextMeshProUGUI timeLeft;
 
     private void Awake()
     {
@@ -30,7 +31,6 @@ public class PlayerManager : MonoBehaviour
     {
 
         countdown.color = Color.green;
-        FindObjectOfType<PlayerMovement>().canMove = false;
 
         while (countdownTime > 0)
         {
@@ -46,6 +46,7 @@ public class PlayerManager : MonoBehaviour
         countdown.color = Color.red;
         countdown.text = "GO!";
         FindObjectOfType<PlayerMovement>().canMove = true;
+        StartCoroutine(TimeLeftToStart());
 
         yield return new WaitForSeconds(1f);
 
@@ -53,9 +54,42 @@ public class PlayerManager : MonoBehaviour
 
     }
 
+    IEnumerator TimeLeftToStart()
+    {
+
+        while (timeLeftTime >= 0)
+        {
+
+            float minutes = Mathf.FloorToInt(timeLeftTime / 60);
+            float seconds = Mathf.FloorToInt(timeLeftTime % 60);
+
+            if (minutes == 0 && seconds < 16)
+            {
+
+                timeLeft.color = Color.red;
+
+            }
+
+            timeLeft.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+            yield return new WaitForSeconds(1f);
+
+            timeLeftTime--;
+
+        }
+
+        FindObjectOfType<PlayerMovement>().canMove = false;
+
+        yield return new WaitForSeconds(1f);
+
+
+    }
+
     void Update()
     {
         
+        
+
     }
 
     void FixedUpdate()
