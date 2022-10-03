@@ -1,13 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
 
-    public Vector3 startPosition;
+    public Vector3 respawnPoint;
     public int countdownTime;
     public int timeLeftTime;
     public TextMeshProUGUI countdown;
@@ -16,7 +14,24 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
 
-        startPosition = transform.position;
+        respawnPoint = new Vector3(transform.position.x, getRandomYPosition(), transform.position.z);
+        transform.position = respawnPoint;
+
+    }
+
+    private float getRandomYPosition()
+    {
+
+        switch (Random.Range(0, 3))
+        {
+
+            case 0:
+                return 25f;
+            case 1:
+                return 15f;
+                
+        }
+        return 5f;
 
     }
 
@@ -98,7 +113,7 @@ public class PlayerManager : MonoBehaviour
         if (transform.position.y < -20f)
         {
 
-            transform.position = startPosition;
+            transform.position = respawnPoint;
 
         }
 
