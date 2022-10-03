@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,44 +7,56 @@ public class GameManager : MonoBehaviour
 {
 
     public Animator animator;
-    private enum startMenuState { idle, start, help, about, quit };
-    private startMenuState state = startMenuState.idle;
+    private enum startMenuStates { idle, start, help, about, quit, select, male, female };
+    private startMenuStates startMenuState = startMenuStates.idle;
 
-    void Update()
+    void Update() 
     {
 
         if (SimpleInput.GetButtonDown("OnIdleButton"))
         {
 
-            state = startMenuState.idle;
+            startMenuState = startMenuStates.idle;
 
         }
         if (SimpleInput.GetButtonDown("OnStartButton"))
         {
 
-            state = startMenuState.start;
+            startMenuState = startMenuStates.start;
 
         }
         if (SimpleInput.GetButtonDown("OnHelpButton"))
         {
 
-            state = startMenuState.help;
+            startMenuState = startMenuStates.help;
 
         }
         if (SimpleInput.GetButtonDown("OnAboutButton"))
         {
 
-            state = startMenuState.about;
+            startMenuState = startMenuStates.about;
 
         }
         if (SimpleInput.GetButtonDown("OnQuitButton"))
         {
 
-            state = startMenuState.quit;
+            startMenuState = startMenuStates.quit;
+
+        }
+        if (SimpleInput.GetButtonDown("OnMale"))
+        {
+
+            startMenuState = startMenuStates.male;
+
+        }
+        if (SimpleInput.GetButtonDown("OnFemale"))
+        {
+
+            startMenuState = startMenuStates.female;
 
         }
 
-        animator.SetInteger("state", (int) state);
+        animator.SetInteger("startMenuState", (int) startMenuState);
 
     }
 
