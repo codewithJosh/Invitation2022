@@ -6,10 +6,15 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public CharacterController controller;
+    public Animator animator;
+
+    public enum playerStates { idle, isRunning, isJumping };
+    public playerStates playerState = playerStates.idle;
 
     public float speed = 12f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
+    public bool canMove;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -22,8 +27,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
 
+        canMove = false;
 
     }
 
@@ -33,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if (isGrounded && velocity.y <0)
+        if (isGrounded && velocity.y < 0)
         {
 
             velocity.y = -2f;
@@ -44,19 +49,32 @@ public class PlayerMovement : MonoBehaviour
         float z = joystick.Vertical;
 
         Vector3 move = transform.right * x + transform.forward * z;
-
-        controller.Move(move * speed * Time.deltaTime);
-
-        if (SimpleInput.GetButtonDown("Jump") && isGrounded)
+        
+        if (canMove && x != 0f && z != 0f)
         {
 
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            playerState = playerStates.isRunning;
+            controller.Move(move * speed * Time.deltaTime);
 
+        }
+        else
+        {
+            playerState = playerStates.idle;
+        }
+
+        if (SimpleInput.GetButtonDown("Jump") && isGrounded && canMove)
+        {
+
+            playerState = playerStates.isJumping;
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            
         }
 
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+        animator.SetInteger("playerState", (int) playerState);
 
     }
 

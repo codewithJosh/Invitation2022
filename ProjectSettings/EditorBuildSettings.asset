@@ -6,12 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PremonitionScene.unity
-    guid: df12d3b65d584be40a6e5768caf10330
-  - enabled: 1
-    path: Assets/Scenes/LoadingScene.unity
-    guid: 9769e6ee5308f344d8d94088f8e4deed
-  - enabled: 1
-    path: Assets/Scenes/StartMenuScene.unity
-    guid: 39c3661cc0f11ec4096443acf3943037
+    path: Assets/Scenes/Maps/MapitaMap.unity
+    guid: 8b2da89e56ff37149b1af2fd79a0a199
   m_configObjects: {}
