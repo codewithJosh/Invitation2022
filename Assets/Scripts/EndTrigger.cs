@@ -18,6 +18,12 @@ public class EndTrigger : MonoBehaviour
             FindObjectOfType<PlayerManager>().OnStepState();
 
         }
+        else if (FindObjectOfType<PlayerManager>().tag == "Finish")
+        {
+
+
+
+        }
 
     }
 
