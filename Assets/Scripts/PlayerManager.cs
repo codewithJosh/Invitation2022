@@ -8,8 +8,12 @@ public class PlayerManager : MonoBehaviour
     public Vector3 respawnPoint;
     public int countdownTime;
     public int timeLeftTime;
+    public int stepState;
+    public int finalStep;
+    public string tag;
     public TextMeshProUGUI countdown;
     public TextMeshProUGUI timeLeft;
+    public TextMeshProUGUI step;
 
     private void Awake()
     {
@@ -39,6 +43,7 @@ public class PlayerManager : MonoBehaviour
     {
 
         StartCoroutine(CountdownToStart());
+        OnStepState();
 
     }
 
@@ -116,6 +121,14 @@ public class PlayerManager : MonoBehaviour
             transform.position = respawnPoint;
 
         }
+
+    }
+
+    public void OnStepState()
+    {
+
+        stepState += 1;
+        step.text = stepState + "/" + finalStep;
 
     }
 
