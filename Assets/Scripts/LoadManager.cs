@@ -6,21 +6,31 @@ using UnityEngine.UI;
 public class LoadManager : MonoBehaviour
 {
 
-    public Image fill;
-    public Text text;
+    [SerializeField] private Image fill;
+    [SerializeField] private Text text;
 
     private void Start()
     {
 
-        int index = PlayerPrefs.GetInt("index", 2);
-        LoadScene(index);
+        int countdown = 5;
+        StartCoroutine(LoadingToStart(countdown));  
 
     }
 
-    public void LoadScene(int _index)
+    IEnumerator LoadingToStart(int _countdown)
     {
 
-        StartCoroutine(LoadAsynchronously(_index));
+        while (_countdown > 0)
+        {
+
+            yield return new WaitForSeconds(1f);
+
+            _countdown--;
+
+        }
+
+        int index = PlayerPrefs.GetInt("index", 2);
+        StartCoroutine(LoadAsynchronously(index));
 
     }
 
