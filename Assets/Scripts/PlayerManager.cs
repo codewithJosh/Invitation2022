@@ -5,6 +5,9 @@ using TMPro;
 public class PlayerManager : MonoBehaviour
 {
 
+    [SerializeField] private Sprite[] maleSkins;
+    [SerializeField] private Sprite[] femaleSkins;
+
     public Vector3 respawnPoint;
     public int countdownTime;
     public int timeLeftTime;
