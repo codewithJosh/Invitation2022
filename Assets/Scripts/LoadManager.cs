@@ -2,12 +2,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class LoadManager : MonoBehaviour
 {
 
-    [SerializeField] private Image fill;
-    [SerializeField] private Text text;
+    [SerializeField] private Image loadingFillHUD;
+    [SerializeField] private TextMeshProUGUI loadingProgressUIText;
 
     private void Start()
     {
@@ -44,8 +45,8 @@ public class LoadManager : MonoBehaviour
 
             float progress = Mathf.Clamp01(operation.progress / .9f);
 
-            fill.fillAmount = progress;
-            text.text = progress * 100f + "%";
+            loadingFillHUD.fillAmount = progress;
+            loadingProgressUIText.text = progress * 100f + "%";
 
             yield return null;
 
