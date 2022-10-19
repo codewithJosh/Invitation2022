@@ -12,7 +12,7 @@ public class LoadManager : MonoBehaviour
     private void Start()
     {
 
-        int countdown = 5;
+        int countdown = 2;
         StartCoroutine(LoadingToStart(countdown));  
 
     }

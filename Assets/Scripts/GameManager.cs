@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public Animator animator;
+    [SerializeField] private Animator animator;
     private enum startMenuStates { idle, start, help, about, quit, select, male, female };
     private startMenuStates startMenuState = startMenuStates.idle;
 
@@ -57,6 +57,13 @@ public class GameManager : MonoBehaviour
         }
 
         animator.SetInteger("startMenuState", (int) startMenuState);
+
+    }
+
+    public Animator GetAnimator
+    {
+
+        get { return animator; }
 
     }
 

@@ -2,10 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LaunchManager : MonoBehaviour
+public class Premonition : MonoBehaviour
 {
-
-    [SerializeField] private Animator animator;
 
     private enum premonitionStates { idle, premonition, creditsLight, creditsDark };
     private premonitionStates premonitionState = premonitionStates.idle;
@@ -21,11 +19,23 @@ public class LaunchManager : MonoBehaviour
 
     }
 
+    void Update()
+    {
+
+        if (SimpleInput.GetButtonDown("OnTapToSkip"))
+        {
+
+            OnTapToSkip();
+
+        }
+
+    }
+
     IEnumerator PremonitionToStart(int _countdown)
     {
 
         premonitionState = premonitionStates.premonition;
-        animator.SetInteger("premonitionState", (int) premonitionState);
+        FindObjectOfType<GameManager>().GetAnimator.SetInteger("premonitionState", (int)premonitionState);
 
         int count = 0;
 
@@ -86,7 +96,7 @@ public class LaunchManager : MonoBehaviour
 
         }
 
-        animator.SetInteger("premonitionState", (int)premonitionState);
+        FindObjectOfType<GameManager>().GetAnimator.SetInteger("premonitionState", (int)premonitionState);
 
         while (_countdown > 0)
         {
