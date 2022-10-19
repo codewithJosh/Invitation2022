@@ -13,6 +13,7 @@ public class LoadManager : MonoBehaviour
     private void Start()
     {
 
+        loadingProgressUIText.text = "0%";
         int countdown = 2;
         StartCoroutine(LoadingToStart(countdown));  
 

@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100%
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 08720bf7321d99f4c82fa794d62324ce, type: 2}
   m_sharedMaterial: {fileID: -1711710889510550319, guid: 08720bf7321d99f4c82fa794d62324ce, type: 2}
@@ -703,8 +703,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf8968b2cc97fa4c8d63dfb4ba88518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fill: {fileID: 444975474}
-  text: {fileID: 31307682}
+  loadingFillHUD: {fileID: 444975474}
+  loadingProgressUIText: {fileID: 31307682}
 --- !u!4 &2059895784
 Transform:
   m_ObjectHideFlags: 0
