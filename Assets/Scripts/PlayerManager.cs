@@ -3,9 +3,6 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
 
-    [SerializeField] private Sprite[] maleSkins;
-    [SerializeField] private Sprite[] femaleSkins;
-
     [HideInInspector] public int lastSkinUsed;
     [HideInInspector] public int lastMapUsed;
     [HideInInspector] public int unlockedSkins;

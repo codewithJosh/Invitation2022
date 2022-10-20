@@ -20,7 +20,7 @@ public static class Database
     public static PlayerModel LoadPlayer()
     {
 
-        string path = Application.persistentDataPath + "/player.mango";
+        string path = Application.persistentDataPath + "/player.invitation";
 
         if (File.Exists(path))
         {
