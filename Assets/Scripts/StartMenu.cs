@@ -5,6 +5,8 @@ using UnityEngine;
 public class StartMenu : MonoBehaviour
 {
 
+    [SerializeField] private Sprite[] resources;
+
     private enum startMenuStates { idle, start, help, about, quit, select };
     private startMenuStates startMenuState = startMenuStates.idle;
 
@@ -41,22 +43,70 @@ public class StartMenu : MonoBehaviour
             startMenuState = startMenuStates.quit;
 
         }
-        if (SimpleInput.GetButtonDown("OnMale"))
+        
+        if (startMenuState == startMenuStates.start)
         {
 
-            FindObjectOfType<GameManager>().OnAnimate("male");
-            int countdown = 2;
-            StartCoroutine(SelectSectionToStart(countdown));
+            if (SimpleInput.GetButtonDown("OnMale"))
+            {
+
+                FindObjectOfType<GameManager>().OnAnimate("male");
+                int countdown = 2;
+                StartCoroutine(SelectSectionToStart(countdown));
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnFemale"))
+            {
+
+                FindObjectOfType<GameManager>().OnAnimate("female");
+                int countdown = 2;
+                StartCoroutine(SelectSectionToStart(countdown));
+
+            }
 
         }
-        if (SimpleInput.GetButtonDown("OnFemale"))
+
+        if (startMenuState == startMenuStates.select)
         {
 
-            FindObjectOfType<GameManager>().OnAnimate("female");
-            int countdown = 2;
-            StartCoroutine(SelectSectionToStart(countdown));
+            if (SimpleInput.GetButtonDown("OnPreviousSkin"))
+            {
+
+                
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnNextSkin"))
+            {
+
+                
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnPreviousMap"))
+            {
+
+
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnNextMap"))
+            {
+
+
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnRun"))
+            {
+
+
+
+            }
 
         }
+
 
         FindObjectOfType<GameManager>().GetAnimator.SetInteger("startMenuState", (int)startMenuState);
 
