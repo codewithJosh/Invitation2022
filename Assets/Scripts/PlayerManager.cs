@@ -6,22 +6,39 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Sprite[] maleSkins;
     [SerializeField] private Sprite[] femaleSkins;
 
-    private int lastSkinUsed;
-    private int lastMapUsed;
-    private int unlockedSkins;
-    private int unlockedMaps;
+    [HideInInspector] public int lastSkinUsed;
+    [HideInInspector] public int lastMapUsed;
+    [HideInInspector] public int unlockedSkins;
+    [HideInInspector] public int unlockedMaps;
 
-    void Start()
+    public void NewPlayer()
     {
 
-        
+        lastSkinUsed = 0;
+        lastMapUsed = 0;
+        unlockedSkins = 0;
+        unlockedMaps = 0;
+
+        SavePlayer();
 
     }
 
-    void Update()
+    public void SavePlayer()
     {
-        
-        
+
+        Database.SavePlayer(this);
+
+    }
+
+    public void LoadPlayer()
+    {
+
+        PlayerModel playerManager = Database.LoadPlayer();
+
+        lastSkinUsed = playerManager.lastSkinUsed;
+        lastMapUsed = playerManager.lastMapUsed;
+        unlockedSkins = playerManager.unlockedSkins;
+        unlockedMaps = playerManager.unlockedMaps;
 
     }
 

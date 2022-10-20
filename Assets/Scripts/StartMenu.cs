@@ -28,10 +28,26 @@ public class StartMenu : MonoBehaviour
     private StartMenuStates startMenuState = StartMenuStates.idle;
 
     private int isFemale;
+    private int lastSkinUsed;
+    private int lastMapUsed;
+    private int unlockedSkins;
+    private int unlockedMaps;
+
+    void Start()
+    {
+
+        FindObjectOfType<PlayerManager>().LoadPlayer();
+
+        lastSkinUsed = FindObjectOfType<PlayerManager>().lastSkinUsed;
+        lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
+        unlockedSkins = FindObjectOfType<PlayerManager>().unlockedSkins;
+        unlockedMaps = FindObjectOfType<PlayerManager>().unlockedMaps;
+
+    }
 
     void Update()
     {
-        
+
         if (SimpleInput.GetButtonDown("OnIdle"))
         {
 
@@ -91,33 +107,70 @@ public class StartMenu : MonoBehaviour
         if (startMenuState == StartMenuStates.select)
         {
 
+            FindObjectOfType<PlayerManager>().lastSkinUsed = lastSkinUsed;
+            FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
+            FindObjectOfType<PlayerManager>().unlockedSkins = unlockedSkins;
+            FindObjectOfType<PlayerManager>().unlockedMaps = unlockedMaps;
 
+            if (lastSkinUsed <= unlockedSkins)
+            {
+
+                skinsTitleHUD.sprite = resources[1];
+                skinUITextHUD.sprite = resources[5];
+                skinLockedHUD.enabled = false;
+
+            }
+            else
+            {
+
+                skinsTitleHUD.sprite = resources[0];
+                skinUITextHUD.sprite = resources[4];
+                skinLockedHUD.enabled = true;
+
+            }
+
+            if (lastMapUsed <= unlockedMaps)
+            {
+
+                mapsTitleHUD.sprite = resources[3];
+                mapUITextHUD.sprite = resources[5];
+                mapLockedHUD.enabled = false;
+
+            }
+            else
+            {
+
+                mapsTitleHUD.sprite = resources[2];
+                mapUITextHUD.sprite = resources[4];
+                mapLockedHUD.enabled = true;
+
+            }
 
             if (SimpleInput.GetButtonDown("OnPreviousSkin"))
             {
 
-                
+                lastSkinUsed--;
 
             }
 
             if (SimpleInput.GetButtonDown("OnNextSkin"))
             {
 
-                
+                lastSkinUsed++;
 
             }
 
             if (SimpleInput.GetButtonDown("OnPreviousMap"))
             {
 
-
+                lastMapUsed--;
 
             }
 
             if (SimpleInput.GetButtonDown("OnNextMap"))
             {
 
-
+                lastMapUsed++;
 
             }
 

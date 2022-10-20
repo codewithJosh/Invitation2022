@@ -2536,7 +2536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinHUD: {fileID: 2989092}
-  skinsTitleHUD: {fileID: 1969999777}
+  skinsTitleHUD: {fileID: 1519829209}
   skinUITextHUD: {fileID: 1969999777}
   skinLockedHUD: {fileID: 240516667}
   skinPreviousUIButton: {fileID: 794785679}
@@ -2562,6 +2562,8 @@ MonoBehaviour:
   skinUIText: {fileID: 1486704690}
   mapLockedUIText: {fileID: 612980538}
   mapUIText: {fileID: 673620577}
+  lastSkinUsed: 0
+  lastMapUsed: 0
 --- !u!114 &1097747579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2580,6 +2582,10 @@ MonoBehaviour:
   femaleSkins:
   - {fileID: 21300000, guid: 11cea7335ef340a4a91a587702ac2fe5, type: 3}
   - {fileID: 21300000, guid: 2687a98e8cc7c84448b26280b0c7b738, type: 3}
+  lastSkinUsed: 0
+  lastMapUsed: 0
+  unlockedSkins: 0
+  unlockedMaps: 0
 --- !u!1 &1122532661
 GameObject:
   m_ObjectHideFlags: 0
