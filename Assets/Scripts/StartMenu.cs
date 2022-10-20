@@ -16,31 +16,31 @@ public class StartMenu : MonoBehaviour
         if (SimpleInput.GetButtonDown("OnIdle"))
         {
 
-            startMenuState = startMenuStates.idle;
+            OnAnimateFromStartMenu(startMenuStates.idle);
 
         }
         if (SimpleInput.GetButtonDown("OnStart"))
         {
 
-            startMenuState = startMenuStates.start;
+            OnAnimateFromStartMenu(startMenuStates.start);
 
         }
         if (SimpleInput.GetButtonDown("OnHelp"))
         {
 
-            startMenuState = startMenuStates.help;
+            OnAnimateFromStartMenu(startMenuStates.help);
 
         }
         if (SimpleInput.GetButtonDown("OnAbout"))
         {
 
-            startMenuState = startMenuStates.about;
+            OnAnimateFromStartMenu(startMenuStates.about);
 
         }
         if (SimpleInput.GetButtonDown("OnQuit"))
         {
 
-            startMenuState = startMenuStates.quit;
+            OnAnimateFromStartMenu(startMenuStates.quit);
 
         }
         
@@ -107,9 +107,6 @@ public class StartMenu : MonoBehaviour
 
         }
 
-
-        FindObjectOfType<GameManager>().GetAnimator.SetInteger("startMenuState", (int)startMenuState);
-
     }
 
     IEnumerator SelectSectionToStart(int _countdown)
@@ -125,6 +122,14 @@ public class StartMenu : MonoBehaviour
         }
 
         startMenuState = startMenuStates.select;
+        FindObjectOfType<GameManager>().GetAnimator.SetInteger("startMenuState", (int)startMenuState);
+
+    }
+
+    private void OnAnimateFromStartMenu(startMenuStates _startMenuState)
+    {
+
+        startMenuState = _startMenuState;
         FindObjectOfType<GameManager>().GetAnimator.SetInteger("startMenuState", (int)startMenuState);
 
     }
