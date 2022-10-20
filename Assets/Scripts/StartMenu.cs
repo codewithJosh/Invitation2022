@@ -1,9 +1,11 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class StartMenu : MonoBehaviour
 {
 
-    private enum startMenuStates { idle, start, help, about, quit, select, male, female };
+    private enum startMenuStates { idle, start, help, about, quit, select };
     private startMenuStates startMenuState = startMenuStates.idle;
 
     void Update()
@@ -42,17 +44,37 @@ public class StartMenu : MonoBehaviour
         if (SimpleInput.GetButtonDown("OnMale"))
         {
 
-            startMenuState = startMenuStates.male;
+            FindObjectOfType<GameManager>().OnAnimate("male");
+            int countdown = 2;
+            StartCoroutine(SelectSectionToStart(countdown));
 
         }
         if (SimpleInput.GetButtonDown("OnFemale"))
         {
 
-            startMenuState = startMenuStates.female;
+            FindObjectOfType<GameManager>().OnAnimate("female");
+            int countdown = 2;
+            StartCoroutine(SelectSectionToStart(countdown));
 
         }
 
         FindObjectOfType<GameManager>().GetAnimator.SetInteger("startMenuState", (int)startMenuState);
+
+    }
+
+    IEnumerator SelectSectionToStart(int _countdown)
+    {
+
+        while (_countdown > 0)
+        {
+
+            yield return new WaitForSeconds(1f);
+
+            _countdown--;
+
+        }
+
+        startMenuState = startMenuStates.select;
 
     }
 

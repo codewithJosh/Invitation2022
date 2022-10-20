@@ -12,4 +12,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void OnAnimate(string _trigger)
+    {
+
+        animator.SetTrigger(_trigger);
+
+    }
+
 }
