@@ -1,17 +1,37 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class StartMenu : MonoBehaviour
 {
 
+    [SerializeField] private Image skinHUD;
+    [SerializeField] private Image skinsTitleHUD;
+    [SerializeField] private Image skinUITextHUD;
+    [SerializeField] private Image skinLockedHUD;
+    [SerializeField] private Image skinPreviousUIButton;
+    [SerializeField] private Image skinNextUIButton;
+    [SerializeField] private Image mapHUD;
+    [SerializeField] private Image mapsTitleHUD;
+    [SerializeField] private Image mapUITextHUD;
+    [SerializeField] private Image mapLockedHUD;
+    [SerializeField] private Image mapPreviousUIButton;
+    [SerializeField] private Image mapNextUIButton;
     [SerializeField] private Sprite[] resources;
+    [SerializeField] private TextMeshProUGUI skinLockedUIText;
+    [SerializeField] private TextMeshProUGUI skinUIText;
+    [SerializeField] private TextMeshProUGUI mapLockedUIText;
+    [SerializeField] private TextMeshProUGUI mapUIText;
 
     private enum StartMenuStates { idle, start, help, about, quit, select };
     private StartMenuStates startMenuState = StartMenuStates.idle;
 
+    private int isFemale;
+
     void Update()
     {
-
+        
         if (SimpleInput.GetButtonDown("OnIdle"))
         {
 
@@ -49,6 +69,7 @@ public class StartMenu : MonoBehaviour
             if (SimpleInput.GetButtonDown("OnMale"))
             {
 
+                isFemale = 0;
                 FindObjectOfType<GameManager>().OnAnimate("male");
                 int countdown = 1;
                 StartCoroutine(SelectSectionToStart(countdown));
@@ -58,6 +79,7 @@ public class StartMenu : MonoBehaviour
             if (SimpleInput.GetButtonDown("OnFemale"))
             {
 
+                isFemale = 1;
                 FindObjectOfType<GameManager>().OnAnimate("female");
                 int countdown = 1;
                 StartCoroutine(SelectSectionToStart(countdown));
@@ -68,6 +90,8 @@ public class StartMenu : MonoBehaviour
 
         if (startMenuState == StartMenuStates.select)
         {
+
+
 
             if (SimpleInput.GetButtonDown("OnPreviousSkin"))
             {
