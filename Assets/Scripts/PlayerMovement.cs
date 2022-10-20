@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -8,8 +6,8 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public Animator animator;
 
-    public enum playerStates { idle, isRunning, isJumping };
-    public playerStates playerState = playerStates.idle;
+    public enum PlayerStates { idle, isRunning, isJumping };
+    public PlayerStates playerState = PlayerStates.idle;
 
     public float speed = 12f;
     public float gravity = -9.81f;
@@ -24,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
 
-    // Start is called before the first frame update
     void Start()
     {
 
@@ -32,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -53,19 +49,19 @@ public class PlayerMovement : MonoBehaviour
         if (canMove && x != 0f && z != 0f)
         {
 
-            playerState = playerStates.isRunning;
+            playerState = PlayerStates.isRunning;
             controller.Move(move * speed * Time.deltaTime);
 
         }
         else
         {
-            playerState = playerStates.idle;
+            playerState = PlayerStates.idle;
         }
 
         if (SimpleInput.GetButtonDown("Jump") && isGrounded && canMove)
         {
 
-            playerState = playerStates.isJumping;
+            playerState = PlayerStates.isJumping;
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             
         }

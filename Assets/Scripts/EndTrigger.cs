@@ -8,17 +8,17 @@ public class EndTrigger : MonoBehaviour
 
         string tag = gameObject.tag;
 
-        if (FindObjectOfType<PlayerManager>().tag != tag)
+        if (FindObjectOfType<Mapita>().tag != tag)
         {
 
             Vector3 position = gameObject.transform.position;
 
-            FindObjectOfType<PlayerManager>().respawnPoint = new Vector3(position.x + getXRandomPosition(), position.y + 3f, position.z);
-            FindObjectOfType<PlayerManager>().tag = tag;
-            FindObjectOfType<PlayerManager>().OnStepState();
+            FindObjectOfType<Mapita>().respawnPoint = new Vector3(position.x + getXRandomPosition(), position.y + 3f, position.z);
+            FindObjectOfType<Mapita>().tag = tag;
+            FindObjectOfType<Mapita>().OnStepState();
 
         }
-        else if (FindObjectOfType<PlayerManager>().tag == "Finish")
+        else if (FindObjectOfType<Mapita>().tag == "Finish")
         {
 
 

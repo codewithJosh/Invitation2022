@@ -1,62 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
 
-    public Animator animator;
-    private enum startMenuStates { idle, start, help, about, quit, select, male, female };
-    private startMenuStates startMenuState = startMenuStates.idle;
+    [SerializeField] private Animator animator;
 
-    void Update() 
+    public Animator GetAnimator
     {
 
-        if (SimpleInput.GetButtonDown("OnIdleButton"))
-        {
+        get { return animator; }
 
-            startMenuState = startMenuStates.idle;
+    }
 
-        }
-        if (SimpleInput.GetButtonDown("OnStartButton"))
-        {
+    public void OnAnimate(string _trigger)
+    {
 
-            startMenuState = startMenuStates.start;
-
-        }
-        if (SimpleInput.GetButtonDown("OnHelpButton"))
-        {
-
-            startMenuState = startMenuStates.help;
-
-        }
-        if (SimpleInput.GetButtonDown("OnAboutButton"))
-        {
-
-            startMenuState = startMenuStates.about;
-
-        }
-        if (SimpleInput.GetButtonDown("OnQuitButton"))
-        {
-
-            startMenuState = startMenuStates.quit;
-
-        }
-        if (SimpleInput.GetButtonDown("OnMale"))
-        {
-
-            startMenuState = startMenuStates.male;
-
-        }
-        if (SimpleInput.GetButtonDown("OnFemale"))
-        {
-
-            startMenuState = startMenuStates.female;
-
-        }
-
-        animator.SetInteger("startMenuState", (int) startMenuState);
+        animator.SetTrigger(_trigger);
 
     }
 
