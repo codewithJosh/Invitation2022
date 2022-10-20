@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,8 +6,8 @@ public class StartMenu : MonoBehaviour
 
     [SerializeField] private Sprite[] resources;
 
-    private enum startMenuStates { idle, start, help, about, quit, select };
-    private startMenuStates startMenuState = startMenuStates.idle;
+    private enum StartMenuStates { idle, start, help, about, quit, select };
+    private StartMenuStates startMenuState = StartMenuStates.idle;
 
     void Update()
     {
@@ -16,35 +15,35 @@ public class StartMenu : MonoBehaviour
         if (SimpleInput.GetButtonDown("OnIdle"))
         {
 
-            OnAnimateFromStartMenu(startMenuStates.idle);
+            OnAnimateFromStartMenu(StartMenuStates.idle);
 
         }
         if (SimpleInput.GetButtonDown("OnStart"))
         {
 
-            OnAnimateFromStartMenu(startMenuStates.start);
+            OnAnimateFromStartMenu(StartMenuStates.start);
 
         }
         if (SimpleInput.GetButtonDown("OnHelp"))
         {
 
-            OnAnimateFromStartMenu(startMenuStates.help);
+            OnAnimateFromStartMenu(StartMenuStates.help);
 
         }
         if (SimpleInput.GetButtonDown("OnAbout"))
         {
 
-            OnAnimateFromStartMenu(startMenuStates.about);
+            OnAnimateFromStartMenu(StartMenuStates.about);
 
         }
         if (SimpleInput.GetButtonDown("OnQuit"))
         {
 
-            OnAnimateFromStartMenu(startMenuStates.quit);
+            OnAnimateFromStartMenu(StartMenuStates.quit);
 
         }
         
-        if (startMenuState == startMenuStates.start)
+        if (startMenuState == StartMenuStates.start)
         {
 
             if (SimpleInput.GetButtonDown("OnMale"))
@@ -67,7 +66,7 @@ public class StartMenu : MonoBehaviour
 
         }
 
-        if (startMenuState == startMenuStates.select)
+        if (startMenuState == StartMenuStates.select)
         {
 
             if (SimpleInput.GetButtonDown("OnPreviousSkin"))
@@ -121,12 +120,12 @@ public class StartMenu : MonoBehaviour
 
         }
 
-        startMenuState = startMenuStates.select;
+        startMenuState = StartMenuStates.select;
         FindObjectOfType<GameManager>().GetAnimator.SetInteger("startMenuState", (int)startMenuState);
 
     }
 
-    private void OnAnimateFromStartMenu(startMenuStates _startMenuState)
+    private void OnAnimateFromStartMenu(StartMenuStates _startMenuState)
     {
 
         startMenuState = _startMenuState;

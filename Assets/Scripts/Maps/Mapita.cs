@@ -20,7 +20,7 @@ public class Mapita : MonoBehaviour
 
         respawnPoint = new Vector3(transform.position.x, getRandomYPosition(), transform.position.z);
         transform.position = respawnPoint;
-        FindObjectOfType<PlayerMovement>().playerState = PlayerMovement.playerStates.idle;
+        FindObjectOfType<PlayerMovement>().playerState = PlayerMovement.PlayerStates.idle;
 
     }
 
