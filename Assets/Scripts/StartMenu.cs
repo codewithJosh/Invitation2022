@@ -6,18 +6,18 @@ using TMPro;
 public class StartMenu : MonoBehaviour
 {
 
+    [SerializeField] private GameObject skinLockedHUD;
+    [SerializeField] private GameObject skinPreviousUIButton;
+    [SerializeField] private GameObject skinNextUIButton;
+    [SerializeField] private GameObject mapLockedHUD;
+    [SerializeField] private GameObject mapPreviousUIButton;
+    [SerializeField] private GameObject mapNextUIButton;
     [SerializeField] private Image skinHUD;
     [SerializeField] private Image skinsTitleHUD;
     [SerializeField] private Image skinUITextHUD;
-    [SerializeField] private Image skinLockedHUD;
-    [SerializeField] private Image skinPreviousUIButton;
-    [SerializeField] private Image skinNextUIButton;
     [SerializeField] private Image mapHUD;
     [SerializeField] private Image mapsTitleHUD;
     [SerializeField] private Image mapUITextHUD;
-    [SerializeField] private Image mapLockedHUD;
-    [SerializeField] private Image mapPreviousUIButton;
-    [SerializeField] private Image mapNextUIButton;
     [SerializeField] private Sprite[] resources;
     [SerializeField] private TextMeshProUGUI skinLockedUIText;
     [SerializeField] private TextMeshProUGUI skinUIText;
@@ -117,7 +117,7 @@ public class StartMenu : MonoBehaviour
 
                 skinsTitleHUD.sprite = resources[1];
                 skinUITextHUD.sprite = resources[5];
-                skinLockedHUD.enabled = false;
+                skinLockedHUD.SetActive(false);
 
             }
             else
@@ -125,7 +125,7 @@ public class StartMenu : MonoBehaviour
 
                 skinsTitleHUD.sprite = resources[0];
                 skinUITextHUD.sprite = resources[4];
-                skinLockedHUD.enabled = true;
+                skinLockedHUD.SetActive(true);
 
             }
 
@@ -134,7 +134,7 @@ public class StartMenu : MonoBehaviour
 
                 mapsTitleHUD.sprite = resources[3];
                 mapUITextHUD.sprite = resources[5];
-                mapLockedHUD.enabled = false;
+                mapLockedHUD.SetActive(false);
 
             }
             else
@@ -142,35 +142,114 @@ public class StartMenu : MonoBehaviour
 
                 mapsTitleHUD.sprite = resources[2];
                 mapUITextHUD.sprite = resources[4];
-                mapLockedHUD.enabled = true;
+                mapLockedHUD.SetActive(true);
 
+            }
+
+            if (lastSkinUsed == 0)
+            {
+
+                skinPreviousUIButton.GetComponent<Button>().interactable = false;
+                skinPreviousUIButton.GetComponent<Image>().sprite = resources[6];
+
+            }
+            else
+            {
+
+                skinPreviousUIButton.GetComponent<Button>().interactable = true;
+                skinPreviousUIButton.GetComponent<Image>().sprite = resources[7];
+
+            }
+
+            if (lastSkinUsed < 5)
+            {
+
+                skinNextUIButton.GetComponent<Button>().interactable = true;
+                skinNextUIButton.GetComponent<Image>().sprite = resources[9];
+
+            }
+            else
+            {
+                
+                skinNextUIButton.GetComponent<Button>().interactable = false;
+                skinNextUIButton.GetComponent<Image>().sprite = resources[8];
+
+            }
+
+            if (lastMapUsed == 0)
+            {
+
+                mapPreviousUIButton.GetComponent<Button>().interactable = false;
+                mapPreviousUIButton.GetComponent<Image>().sprite = resources[6];
+
+            }
+            else
+            {
+
+                mapPreviousUIButton.GetComponent<Button>().interactable = true;
+                mapPreviousUIButton.GetComponent<Image>().sprite = resources[7];
+
+            }
+
+            if (lastMapUsed < 5)
+            {
+
+                mapNextUIButton.GetComponent<Button>().interactable = true;
+                mapNextUIButton.GetComponent<Image>().sprite = resources[9];
+
+            }
+            else
+            {
+
+                mapNextUIButton.GetComponent<Button>().interactable = false;
+                mapNextUIButton.GetComponent<Image>().sprite = resources[8];
             }
 
             if (SimpleInput.GetButtonDown("OnPreviousSkin"))
             {
 
-                lastSkinUsed--;
+                if (lastSkinUsed != 0)
+                {
+
+                    lastSkinUsed--;
+
+                }
 
             }
 
             if (SimpleInput.GetButtonDown("OnNextSkin"))
             {
+                
+                if (lastSkinUsed < 5)
+                {
 
-                lastSkinUsed++;
+                    lastSkinUsed++;
+
+                }
 
             }
 
             if (SimpleInput.GetButtonDown("OnPreviousMap"))
             {
 
-                lastMapUsed--;
+                if (lastMapUsed != 0)
+                {
+
+                    lastMapUsed--;
+
+                }
 
             }
 
             if (SimpleInput.GetButtonDown("OnNextMap"))
             {
 
-                lastMapUsed++;
+                if (lastMapUsed < 5)
+                {
+
+                    lastMapUsed++;
+
+                }
 
             }
 
