@@ -1,12 +1,16 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Premonition : MonoBehaviour
 {
 
-    private enum premonitionStates { idle, premonition, creditsLight, creditsDark };
-    private premonitionStates premonitionState = premonitionStates.idle;
+    [SerializeField] private Image creditsHUD;
+    [SerializeField] private Sprite[] credits;
+
+    private enum PremonitionStates { idle, premonition, credits };
+    private PremonitionStates premonitionState = PremonitionStates.idle;
 
     private bool canTap;
 
@@ -34,7 +38,7 @@ public class Premonition : MonoBehaviour
     IEnumerator PremonitionToStart(int _countdown)
     {
 
-        premonitionState = premonitionStates.premonition;
+        premonitionState = PremonitionStates.premonition;
         FindObjectOfType<GameManager>().GetAnimator.SetInteger("premonitionState", (int)premonitionState);
 
         int count = 0;
@@ -81,21 +85,10 @@ public class Premonition : MonoBehaviour
     IEnumerator CreditsToStart(int _countdown)
     {
 
-        int x = Random.Range(0, 2);
+        int randomState = Random.Range(0, 2);
 
-        if (x == 0)
-        {
-
-            premonitionState = premonitionStates.creditsLight;
-
-        }
-        else if (x == 1)
-        {
-
-            premonitionState = premonitionStates.creditsDark;
-
-        }
-
+        creditsHUD.sprite = credits[randomState];
+        premonitionState = PremonitionStates.credits;
         FindObjectOfType<GameManager>().GetAnimator.SetInteger("premonitionState", (int)premonitionState);
 
         while (_countdown > 0)
