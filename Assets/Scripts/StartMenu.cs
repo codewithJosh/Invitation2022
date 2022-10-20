@@ -51,7 +51,7 @@ public class StartMenu : MonoBehaviour
             {
 
                 FindObjectOfType<GameManager>().OnAnimate("male");
-                int countdown = 2;
+                int countdown = 1;
                 StartCoroutine(SelectSectionToStart(countdown));
 
             }
@@ -60,7 +60,7 @@ public class StartMenu : MonoBehaviour
             {
 
                 FindObjectOfType<GameManager>().OnAnimate("female");
-                int countdown = 2;
+                int countdown = 1;
                 StartCoroutine(SelectSectionToStart(countdown));
 
             }
@@ -125,6 +125,7 @@ public class StartMenu : MonoBehaviour
         }
 
         startMenuState = startMenuStates.select;
+        FindObjectOfType<GameManager>().GetAnimator.SetInteger("startMenuState", (int)startMenuState);
 
     }
 
