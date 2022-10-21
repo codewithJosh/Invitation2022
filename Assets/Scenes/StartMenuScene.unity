@@ -245,7 +245,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -258,7 +258,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 21300000, guid: 772aa889ad8f72c4e8b7859e89fff14d, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ab51150322c4c5b43aefa79ad305c4f2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1849,7 +1849,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ab51150322c4c5b43aefa79ad305c4f2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1901,7 +1901,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1914,7 +1914,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 21300000, guid: 772aa889ad8f72c4e8b7859e89fff14d, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -2675,7 +2675,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2688,7 +2688,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 21300000, guid: d78f42b5d5d121847bcf977b0818629b, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -2720,7 +2720,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 9b37463373fb4724c88ba1336e3ad292, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2798,7 +2798,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 9b37463373fb4724c88ba1336e3ad292, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2850,7 +2850,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2863,7 +2863,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 21300000, guid: d78f42b5d5d121847bcf977b0818629b, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -3039,20 +3039,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eb666e2e9b56cb47b4586dfc4875e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skinPreviousUIButton: {fileID: 794785682}
+  skinNextUIButton: {fileID: 937587261}
+  mapPreviousUIButton: {fileID: 57567782}
+  mapNextUIButton: {fileID: 930580148}
   skinLockedHUD: {fileID: 240516664}
   mapLockedHUD: {fileID: 2093111495}
   skinHUD: {fileID: 926928104}
   skinFrameHUD: {fileID: 1223361113}
   skinsTitleHUD: {fileID: 1519829209}
   skinUITextHUD: {fileID: 1969999777}
-  skinPreviousUIButton: {fileID: 794785679}
-  skinNextUIButton: {fileID: 937587258}
   mapHUD: {fileID: 2000260658}
   mapFrameHUD: {fileID: 1239432629}
   mapsTitleHUD: {fileID: 654990839}
   mapUITextHUD: {fileID: 1472531039}
-  mapPreviousUIButton: {fileID: 57567783}
-  mapNextUIButton: {fileID: 930580149}
   aboutBackground: {fileID: 805215488}
   resources:
   - {fileID: 21300000, guid: a19b3eb3d9a135141b1368b667ca2051, type: 3}
@@ -3061,10 +3061,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 993659f76322d5c47ab14a0b4ded9be0, type: 3}
   - {fileID: 21300000, guid: 1f0535b24798cad44950946f5a878562, type: 3}
   - {fileID: 21300000, guid: 161560eff52414945b3d96dfac2d01da, type: 3}
-  - {fileID: 21300000, guid: 772aa889ad8f72c4e8b7859e89fff14d, type: 3}
-  - {fileID: 21300000, guid: ab51150322c4c5b43aefa79ad305c4f2, type: 3}
-  - {fileID: 21300000, guid: d78f42b5d5d121847bcf977b0818629b, type: 3}
-  - {fileID: 21300000, guid: 9b37463373fb4724c88ba1336e3ad292, type: 3}
   - {fileID: 21300000, guid: 9c586fb2799421d45984e775e54ff008, type: 3}
   - {fileID: 21300000, guid: 9a731cbaef73ed54eae1c1284916ff27, type: 3}
   maleSkins:

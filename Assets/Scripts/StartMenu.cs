@@ -6,21 +6,20 @@ using System;
 
 public class StartMenu : MonoBehaviour
 {
-
+    [SerializeField] private Button skinPreviousUIButton;
+    [SerializeField] private Button skinNextUIButton;
+    [SerializeField] private Button mapPreviousUIButton;
+    [SerializeField] private Button mapNextUIButton;
     [SerializeField] private GameObject skinLockedHUD;
     [SerializeField] private GameObject mapLockedHUD;
     [SerializeField] private Image skinHUD;
     [SerializeField] private Image skinFrameHUD;
     [SerializeField] private Image skinsTitleHUD;
     [SerializeField] private Image skinUITextHUD;
-    [SerializeField] private Image skinPreviousUIButton;
-    [SerializeField] private Image skinNextUIButton;
     [SerializeField] private Image mapHUD;
     [SerializeField] private Image mapFrameHUD;
     [SerializeField] private Image mapsTitleHUD;
     [SerializeField] private Image mapUITextHUD;
-    [SerializeField] private Image mapPreviousUIButton;
-    [SerializeField] private Image mapNextUIButton;
     [SerializeField] private Image aboutBackground;
     [SerializeField] private Sprite[] resources;
     [SerializeField] private Sprite[] maleSkins;
@@ -178,7 +177,7 @@ public class StartMenu : MonoBehaviour
 
                 skinsTitleHUD.sprite = resources[1];
                 skinUITextHUD.sprite = resources[5];
-                skinFrameHUD.sprite = resources[11];
+                skinFrameHUD.sprite = resources[7];
                 skinUIText.color = Color.white;
                 skinLockedHUD.SetActive(false);
 
@@ -188,7 +187,7 @@ public class StartMenu : MonoBehaviour
 
                 skinsTitleHUD.sprite = resources[0];
                 skinUITextHUD.sprite = resources[4];
-                skinFrameHUD.sprite = resources[10];
+                skinFrameHUD.sprite = resources[6];
                 skinUIText.color = Color.black;
                 skinLockedHUD.SetActive(true);
 
@@ -199,7 +198,7 @@ public class StartMenu : MonoBehaviour
 
                 mapsTitleHUD.sprite = resources[3];
                 mapUITextHUD.sprite = resources[5];
-                mapFrameHUD.sprite = resources[11];
+                mapFrameHUD.sprite = resources[7];
                 mapUIText.color = Color.white;
                 mapLockedHUD.SetActive(false);
 
@@ -209,7 +208,7 @@ public class StartMenu : MonoBehaviour
 
                 mapsTitleHUD.sprite = resources[2];
                 mapUITextHUD.sprite = resources[4];
-                mapFrameHUD.sprite = resources[10];
+                mapFrameHUD.sprite = resources[6];
                 mapUIText.color = Color.black;
                 mapLockedHUD.SetActive(true);
 
@@ -218,52 +217,52 @@ public class StartMenu : MonoBehaviour
             if (lastSkinUsed == 0)
             {
 
-                skinPreviousUIButton.sprite = resources[6];
+                skinPreviousUIButton.interactable = false;
 
             }
             else
             {
 
-                skinPreviousUIButton.sprite = resources[7];
+                skinPreviousUIButton.interactable = true;
 
             }
             
             if (lastSkinUsed < 4)
             {
 
-                skinNextUIButton.sprite = resources[9];
+                skinNextUIButton.interactable = true;
 
             }
             else
             {
 
-                skinNextUIButton.sprite = resources[8];
+                skinNextUIButton.interactable = false;
 
             }
 
             if (lastMapUsed == 0)
             {
 
-                mapPreviousUIButton.sprite = resources[6];
+                mapPreviousUIButton.interactable = false;
 
             }
             else
             {
 
-                mapPreviousUIButton.sprite = resources[7];
+                mapPreviousUIButton.interactable = true;
 
             }
 
             if (lastMapUsed < 4)
             {
 
-                mapNextUIButton.sprite = resources[9];
+                mapNextUIButton.interactable = true;
 
             }
             else
             {
 
-                mapNextUIButton.sprite = resources[8];
+                mapNextUIButton.interactable = false;
 
             }
 
