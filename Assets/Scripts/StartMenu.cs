@@ -1,35 +1,38 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
 public class StartMenu : MonoBehaviour
 {
-
+    [SerializeField] private Button skinPreviousUIButton;
+    [SerializeField] private Button skinNextUIButton;
+    [SerializeField] private Button mapPreviousUIButton;
+    [SerializeField] private Button mapNextUIButton;
     [SerializeField] private GameObject skinLockedHUD;
     [SerializeField] private GameObject mapLockedHUD;
     [SerializeField] private Image skinHUD;
     [SerializeField] private Image skinFrameHUD;
     [SerializeField] private Image skinsTitleHUD;
     [SerializeField] private Image skinUITextHUD;
-    [SerializeField] private Image skinPreviousUIButton;
-    [SerializeField] private Image skinNextUIButton;
     [SerializeField] private Image mapHUD;
     [SerializeField] private Image mapFrameHUD;
     [SerializeField] private Image mapsTitleHUD;
     [SerializeField] private Image mapUITextHUD;
-    [SerializeField] private Image mapPreviousUIButton;
-    [SerializeField] private Image mapNextUIButton;
+    [SerializeField] private Image aboutBackground;
     [SerializeField] private Sprite[] resources;
     [SerializeField] private Sprite[] maleSkins;
     [SerializeField] private Sprite[] femaleSkins;
     [SerializeField] private Sprite[] maps;
+    [SerializeField] private Sprite[] abouts;
     [SerializeField] private TextMeshProUGUI skinUIText;
     [SerializeField] private TextMeshProUGUI mapUIText;
 
-    private enum StartMenuStates { idle, start, help, about, quit, select };
+    private enum StartMenuStates { idle, start, help, about, quit, select};
     private StartMenuStates startMenuState = StartMenuStates.idle;
 
+    private int[,,] MAP_INT;
     private string[] maleSkinNames;
     private string[] femaleSkinNames;
     private string[] mapNames;
@@ -46,8 +49,8 @@ public class StartMenu : MonoBehaviour
         maleSkinNames = new string[] 
         { 
 
-            "Shanon", 
-            "Crypto",
+            "SHANON", 
+            "CRYPTO",
             "N/A",
             "N/A",
             "N/A"
@@ -57,8 +60,8 @@ public class StartMenu : MonoBehaviour
         femaleSkinNames = new string[] 
         { 
 
-            "Kate",
-            "Arissa",
+            "KATE",
+            "ARISSA",
             "N/A",
             "N/A",
             "N/A"
@@ -68,11 +71,61 @@ public class StartMenu : MonoBehaviour
         mapNames = new string[] 
         { 
 
-            "Mapita",
-            "Luneta Park",
+            "MAPITA",
+            "LUNETA PARK",
             "N/A",
             "N/A",
             "N/A"
+
+        };
+
+        MAP_INT = new int[5, 3, 2]
+        {
+
+            // MAPITA
+            { 
+
+                { 0, 60 }, 
+                { 0, 55 }, 
+                { 0, 50 } 
+
+            },
+
+            // LUNETA PARK
+            { 
+
+                { 0, 60 }, 
+                { 0, 55 }, 
+                { 0, 50 } 
+
+            },
+
+            // N/A
+            { 
+
+                { 0, 60 },
+                { 0, 55 },
+                { 0, 50 } 
+
+            },
+
+            // N/A
+            { 
+
+                { 0, 60 }, 
+                { 0, 55 }, 
+                { 0, 50 } 
+
+            },
+
+            // N/A
+            { 
+
+                { 0, 60 }, 
+                { 0, 55 }, 
+                { 0, 50 } 
+
+            }
 
         };
 
@@ -81,12 +134,13 @@ public class StartMenu : MonoBehaviour
         if (playerManager == null)
         {
 
-            FindObjectOfType<PlayerManager>().NewPlayer();
+            FindObjectOfType<PlayerManager>().NewPlayer(MAP_INT);
 
         }
 
         FindObjectOfType<PlayerManager>().LoadPlayer();
 
+        MAP_INT = FindObjectOfType<PlayerManager>().MAP_INT;
         lastSkinUsed = FindObjectOfType<PlayerManager>().lastSkinUsed;
         lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
         unlockedSkins = FindObjectOfType<PlayerManager>().unlockedSkins;
@@ -96,63 +150,57 @@ public class StartMenu : MonoBehaviour
 
     void Update()
     {
-        
+
         if (SimpleInput.GetButtonDown("OnIdle"))
         {
 
-            OnAnimateFromStartMenu(StartMenuStates.idle);
-            OnCancel();
+            OnBack();
 
         }
+
         if (SimpleInput.GetButtonDown("OnStart"))
         {
 
-            OnAnimateFromStartMenu(StartMenuStates.start);
-            OnCancel();
+            OnNavigation(StartMenuStates.start);
 
         }
+
         if (SimpleInput.GetButtonDown("OnHelp"))
         {
 
-            OnAnimateFromStartMenu(StartMenuStates.help);
-            OnCancel();
+            OnNavigation(StartMenuStates.help);
 
         }
+
         if (SimpleInput.GetButtonDown("OnAbout"))
         {
 
-            OnAnimateFromStartMenu(StartMenuStates.about);
-            OnCancel();
+            OnNavigation(StartMenuStates.about);
+            OnAbout();
 
         }
+
         if (SimpleInput.GetButtonDown("OnQuit"))
         {
 
-            OnAnimateFromStartMenu(StartMenuStates.quit);
-            OnCancel();
+            OnNavigation(StartMenuStates.quit);
 
         }
-        
+
         if (startMenuState == StartMenuStates.start)
         {
 
             if (SimpleInput.GetButtonDown("OnMale"))
             {
 
-                isMale = true;
-                FindObjectOfType<GameManager>().OnAnimate("male");
-                int countdown = 1;
-                StartCoroutine(SelectSectionToStart(countdown));
+                OnCharacterPicking(true);
 
             }
 
             if (SimpleInput.GetButtonDown("OnFemale"))
             {
 
-                isMale = false;
-                FindObjectOfType<GameManager>().OnAnimate("female");
-                int countdown = 1;
-                StartCoroutine(SelectSectionToStart(countdown));
+                OnCharacterPicking(false);
 
             }
 
@@ -161,7 +209,7 @@ public class StartMenu : MonoBehaviour
         if (startMenuState == StartMenuStates.select)
         {
 
-            FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
+            FindObjectOfType<PlayerManager>().MAP_INT = MAP_INT;
             FindObjectOfType<PlayerManager>().unlockedSkins = unlockedSkins;
             FindObjectOfType<PlayerManager>().unlockedMaps = unlockedMaps;
 
@@ -175,7 +223,7 @@ public class StartMenu : MonoBehaviour
 
                 skinsTitleHUD.sprite = resources[1];
                 skinUITextHUD.sprite = resources[5];
-                skinFrameHUD.sprite = resources[11];
+                skinFrameHUD.sprite = resources[7];
                 skinUIText.color = Color.white;
                 skinLockedHUD.SetActive(false);
 
@@ -185,7 +233,7 @@ public class StartMenu : MonoBehaviour
 
                 skinsTitleHUD.sprite = resources[0];
                 skinUITextHUD.sprite = resources[4];
-                skinFrameHUD.sprite = resources[10];
+                skinFrameHUD.sprite = resources[6];
                 skinUIText.color = Color.black;
                 skinLockedHUD.SetActive(true);
 
@@ -196,7 +244,7 @@ public class StartMenu : MonoBehaviour
 
                 mapsTitleHUD.sprite = resources[3];
                 mapUITextHUD.sprite = resources[5];
-                mapFrameHUD.sprite = resources[11];
+                mapFrameHUD.sprite = resources[7];
                 mapUIText.color = Color.white;
                 mapLockedHUD.SetActive(false);
 
@@ -206,63 +254,16 @@ public class StartMenu : MonoBehaviour
 
                 mapsTitleHUD.sprite = resources[2];
                 mapUITextHUD.sprite = resources[4];
-                mapFrameHUD.sprite = resources[10];
+                mapFrameHUD.sprite = resources[6];
                 mapUIText.color = Color.black;
                 mapLockedHUD.SetActive(true);
 
             }
 
-            if (lastSkinUsed == 0)
-            {
-
-                skinPreviousUIButton.sprite = resources[6];
-
-            }
-            else
-            {
-
-                skinPreviousUIButton.sprite = resources[7];
-
-            }
-            
-            if (lastSkinUsed < 4)
-            {
-
-                skinNextUIButton.sprite = resources[9];
-
-            }
-            else
-            {
-
-                skinNextUIButton.sprite = resources[8];
-
-            }
-
-            if (lastMapUsed == 0)
-            {
-
-                mapPreviousUIButton.sprite = resources[6];
-
-            }
-            else
-            {
-
-                mapPreviousUIButton.sprite = resources[7];
-
-            }
-
-            if (lastMapUsed < 4)
-            {
-
-                mapNextUIButton.sprite = resources[9];
-
-            }
-            else
-            {
-
-                mapNextUIButton.sprite = resources[8];
-
-            }
+            skinPreviousUIButton.interactable = lastSkinUsed == 0 ? false : true;
+            skinNextUIButton.interactable = lastSkinUsed < 4 ? true : false;
+            mapPreviousUIButton.interactable = lastMapUsed == 0 ? false : true;
+            mapNextUIButton.interactable = lastMapUsed < 4 ? true : false;
 
             if (SimpleInput.GetButtonDown("OnPreviousSkin"))
             {
@@ -278,7 +279,7 @@ public class StartMenu : MonoBehaviour
 
             if (SimpleInput.GetButtonDown("OnNextSkin"))
             {
-                
+
                 if (lastSkinUsed < 4)
                 {
 
@@ -314,11 +315,57 @@ public class StartMenu : MonoBehaviour
             if (SimpleInput.GetButtonDown("OnRun"))
             {
 
+                FindObjectOfType<GameManager>().OnAnimate("run");
 
+            }
+
+            if (SimpleInput.GetButtonDown("OnAffirmativeRun"))
+            {
+
+                OnAffirmativeRun();
+                FindObjectOfType<GameManager>().OnAnimate("run");
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnNegativeRun"))
+            {
+
+                FindObjectOfType<GameManager>().OnAnimate("run");
 
             }
 
         }
+
+        if (startMenuState == StartMenuStates.quit)
+        {
+
+            if (SimpleInput.GetButtonDown("OnAffirmativeQuit"))
+            {
+
+                int countdown = 2;
+                StartCoroutine(QuitToStart(countdown));
+
+            }
+
+        }
+
+    }
+
+    private void OnNavigation(StartMenuStates _startMenuState)
+    {
+
+        OnAnimateFromStartMenu(_startMenuState);
+        OnCancel();
+
+    }
+
+    private void OnCharacterPicking(bool _isMale)
+    {
+
+        isMale = _isMale;
+        FindObjectOfType<GameManager>().OnAnimate(_isMale ? "male" : "female");
+        int countdown = 1;
+        StartCoroutine(SelectSectionToStart(countdown));
 
     }
 
@@ -356,6 +403,71 @@ public class StartMenu : MonoBehaviour
             lastSkinUsed = FindObjectOfType<PlayerManager>().lastSkinUsed;
 
         }
+
+        if (lastMapUsed > unlockedMaps)
+        {
+
+            lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
+
+        }
+
+    }
+
+    private void OnAbout()
+    {
+
+        int randomState = UnityEngine.Random.Range(0, 2);
+        aboutBackground.sprite = abouts[randomState];
+
+    }
+
+    private void OnBack()
+    {
+
+        OnAnimateFromStartMenu(StartMenuStates.idle);
+        OnCancel();
+
+    }
+
+    IEnumerator QuitToStart(int _countdown)
+    {
+
+        OnBack();
+
+        while (_countdown > 0)
+        {
+
+            if (_countdown == 2)
+            {
+
+                FindObjectOfType<GameManager>().OnAnimate("offStartMenu");
+
+            }
+
+            yield return new WaitForSeconds(1f);
+
+            _countdown--;
+
+        }
+
+        PlayerPrefs.SetInt("index", 1);
+        Application.Quit();
+
+    }
+
+    private void OnAffirmativeRun()
+    {
+
+        lastSkinUsed = lastSkinUsed > unlockedSkins ? FindObjectOfType<PlayerManager>().lastSkinUsed : lastSkinUsed;
+        lastMapUsed = lastMapUsed > unlockedMaps ? FindObjectOfType<PlayerManager>().lastMapUsed : lastMapUsed;
+
+        FindObjectOfType<PlayerManager>().lastSkinUsed = lastSkinUsed;
+        FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
+        FindObjectOfType<PlayerManager>().SavePlayer();
+
+        PlayerPrefs.SetInt("index", lastMapUsed + 3);
+        SceneManager.LoadScene(1);
+
 
     }
 

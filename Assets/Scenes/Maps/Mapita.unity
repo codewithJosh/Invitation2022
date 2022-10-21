@@ -9693,6 +9693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1944420979}
   animator: {fileID: 405472852}
+  playerState: 0
   speed: 12
   gravity: -19.62
   jumpHeight: 3
@@ -9715,15 +9716,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1716e980995bac245aaab97eff253c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {x: 0, y: 0, z: 0}
-  countdownTime: 3
-  timeLeftTime: 240
-  stepState: 0
-  finalStep: 3
-  tag: 
-  countdown: {fileID: 260325405}
-  timeLeft: {fileID: 1332935043}
-  step: {fileID: 1362346591}
+  lastSkinUsed: 0
+  lastMapUsed: 0
+  unlockedSkins: 0
+  unlockedMaps: 0
 --- !u!43 &1946289811
 Mesh:
   m_ObjectHideFlags: 0
