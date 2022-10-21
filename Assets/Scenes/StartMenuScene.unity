@@ -1166,12 +1166,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 749004111}
-  m_RootOrder: 1
+  m_Father: {fileID: 854566191}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1500, y: -396}
+  m_AnchoredPosition: {x: 0, y: -396}
   m_SizeDelta: {x: 302, y: 126}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &586843554
@@ -1557,6 +1557,7 @@ GameObject:
   - component: {fileID: 711816758}
   - component: {fileID: 711816756}
   - component: {fileID: 711816759}
+  - component: {fileID: 711816760}
   m_Layer: 5
   m_Name: MaleUIButton
   m_TagString: Untagged
@@ -1654,6 +1655,18 @@ MonoBehaviour:
   button:
     m_key: OnMale
     value: 0
+--- !u!225 &711816760
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711816754}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &724857824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,7 +1773,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 854566191}
-  - {fileID: 586843553}
   m_Father: {fileID: 106044847}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2339,6 +2351,7 @@ RectTransform:
   m_Children:
   - {fileID: 2069320700}
   - {fileID: 889473990}
+  - {fileID: 586843553}
   m_Father: {fileID: 749004111}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2451,8 +2464,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 371, y: 0}
-  m_SizeDelta: {x: -1067, y: -481}
+  m_AnchoredPosition: {x: 371, y: 40}
+  m_SizeDelta: {x: -1067, y: -480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &889473991
 CanvasGroup:
@@ -2888,19 +2901,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 941319682}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1185047005}
   - {fileID: 1320116055}
-  m_Father: {fileID: 1999081232}
+  m_Father: {fileID: 1704727437}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -250}
+  m_AnchoredPosition: {x: 0, y: 300}
   m_SizeDelta: {x: 828, y: 386}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &941319684
@@ -4158,12 +4171,12 @@ GameObject:
   - component: {fileID: 1535950724}
   - component: {fileID: 1535950725}
   m_Layer: 5
-  m_Name: ExitSection
+  m_Name: QuitSection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1535950724
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4587,6 +4600,43 @@ MonoBehaviour:
   button:
     m_key: OnStart
     value: 0
+--- !u!1 &1704727436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1704727437}
+  m_Layer: 5
+  m_Name: SubSection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1704727437
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704727436}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 941319683}
+  m_Father: {fileID: 1999081232}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 290}
+  m_SizeDelta: {x: -1092, y: -694}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1708192214
 GameObject:
   m_ObjectHideFlags: 0
@@ -4751,6 +4801,7 @@ GameObject:
   - component: {fileID: 1810118722}
   - component: {fileID: 1810118720}
   - component: {fileID: 1810118723}
+  - component: {fileID: 1810118724}
   m_Layer: 5
   m_Name: FemaleUIButton
   m_TagString: Untagged
@@ -4848,6 +4899,18 @@ MonoBehaviour:
   button:
     m_key: OnFemale
     value: 0
+--- !u!225 &1810118724
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810118718}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1969999774
 GameObject:
   m_ObjectHideFlags: 0
@@ -4983,7 +5046,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 941319683}
+  - {fileID: 1704727437}
   m_Father: {fileID: 1535950724}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5146,8 +5209,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -362.5, y: 0}
-  m_SizeDelta: {x: -1067, y: -481}
+  m_AnchoredPosition: {x: -362.5, y: 40}
+  m_SizeDelta: {x: -1067, y: -480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2069320703
 CanvasRenderer:

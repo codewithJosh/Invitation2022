@@ -165,7 +165,6 @@ public class StartMenu : MonoBehaviour
         if (startMenuState == StartMenuStates.select)
         {
 
-            FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
             FindObjectOfType<PlayerManager>().unlockedSkins = unlockedSkins;
             FindObjectOfType<PlayerManager>().unlockedMaps = unlockedMaps;
 
@@ -358,6 +357,13 @@ public class StartMenu : MonoBehaviour
         {
 
             lastSkinUsed = FindObjectOfType<PlayerManager>().lastSkinUsed;
+
+        }
+
+        if (lastMapUsed > unlockedMaps)
+        {
+
+            lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
 
         }
 
