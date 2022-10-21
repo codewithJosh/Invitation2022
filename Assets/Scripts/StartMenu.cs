@@ -331,7 +331,7 @@ public class StartMenu : MonoBehaviour
             if (SimpleInput.GetButtonDown("OnAffirmativeQuit"))
             {
 
-                int countdown = 3;
+                int countdown = 2;
                 StartCoroutine(QuitToStart(countdown));
 
             }
@@ -416,7 +416,7 @@ public class StartMenu : MonoBehaviour
         while (_countdown > 0)
         {
 
-            if (_countdown == 3)
+            if (_countdown == 2)
             {
 
                 FindObjectOfType<GameManager>().OnAnimate("offStartMenu");
