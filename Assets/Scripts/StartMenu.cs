@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class StartMenu : MonoBehaviour
 {
@@ -20,10 +21,12 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private Image mapUITextHUD;
     [SerializeField] private Image mapPreviousUIButton;
     [SerializeField] private Image mapNextUIButton;
+    [SerializeField] private Image aboutBackground;
     [SerializeField] private Sprite[] resources;
     [SerializeField] private Sprite[] maleSkins;
     [SerializeField] private Sprite[] femaleSkins;
     [SerializeField] private Sprite[] maps;
+    [SerializeField] private Sprite[] abouts;
     [SerializeField] private TextMeshProUGUI skinUIText;
     [SerializeField] private TextMeshProUGUI mapUIText;
 
@@ -123,6 +126,7 @@ public class StartMenu : MonoBehaviour
 
             OnAnimateFromStartMenu(StartMenuStates.about);
             OnCancel();
+            OnAbout();
 
         }
         if (SimpleInput.GetButtonDown("OnQuit"))
@@ -356,6 +360,15 @@ public class StartMenu : MonoBehaviour
             lastSkinUsed = FindObjectOfType<PlayerManager>().lastSkinUsed;
 
         }
+
+    }
+
+    private void OnAbout()
+    {
+
+        int randomState = UnityEngine.Random.Range(0, 2);
+
+        aboutBackground.sprite = abouts[randomState];
 
     }
 
