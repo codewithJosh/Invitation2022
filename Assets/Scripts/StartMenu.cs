@@ -98,14 +98,14 @@ public class StartMenu : MonoBehaviour
 
     void Update()
     {
-        
+
         if (SimpleInput.GetButtonDown("OnIdle"))
         {
 
-            OnAnimateFromStartMenu(StartMenuStates.idle);
-            OnCancel();
+            OnBack();
 
         }
+
         if (SimpleInput.GetButtonDown("OnStart"))
         {
 
@@ -113,6 +113,7 @@ public class StartMenu : MonoBehaviour
             OnCancel();
 
         }
+
         if (SimpleInput.GetButtonDown("OnHelp"))
         {
 
@@ -120,6 +121,7 @@ public class StartMenu : MonoBehaviour
             OnCancel();
 
         }
+
         if (SimpleInput.GetButtonDown("OnAbout"))
         {
 
@@ -128,6 +130,7 @@ public class StartMenu : MonoBehaviour
             OnAbout();
 
         }
+
         if (SimpleInput.GetButtonDown("OnQuit"))
         {
 
@@ -135,7 +138,7 @@ public class StartMenu : MonoBehaviour
             OnCancel();
 
         }
-        
+
         if (startMenuState == StartMenuStates.start)
         {
 
@@ -226,7 +229,7 @@ public class StartMenu : MonoBehaviour
                 skinPreviousUIButton.interactable = true;
 
             }
-            
+
             if (lastSkinUsed < 4)
             {
 
@@ -280,7 +283,7 @@ public class StartMenu : MonoBehaviour
 
             if (SimpleInput.GetButtonDown("OnNextSkin"))
             {
-                
+
                 if (lastSkinUsed < 4)
                 {
 
@@ -317,6 +320,26 @@ public class StartMenu : MonoBehaviour
             {
 
 
+
+            }
+
+        }
+
+        if (startMenuState == StartMenuStates.quit)
+        {
+
+            if (SimpleInput.GetButtonDown("OnAffirmativeQuit"))
+            {
+
+                int countdown = 3;
+                StartCoroutine(QuitToStart(countdown));
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnNegativeQuit"))
+            {
+
+                OnBack();
 
             }
 
@@ -374,6 +397,40 @@ public class StartMenu : MonoBehaviour
         int randomState = UnityEngine.Random.Range(0, 2);
 
         aboutBackground.sprite = abouts[randomState];
+
+    }
+
+    private void OnBack()
+    {
+
+        OnAnimateFromStartMenu(StartMenuStates.idle);
+        OnCancel();
+
+    }
+
+    IEnumerator QuitToStart(int _countdown)
+    {
+
+        OnBack();
+
+        while (_countdown > 0)
+        {
+
+            if (_countdown == 3)
+            {
+
+                FindObjectOfType<GameManager>().OnAnimate("offStartMenu");
+
+            }
+
+            yield return new WaitForSeconds(1f);
+
+            _countdown--;
+
+        }
+
+        PlayerPrefs.SetInt("index", 1);
+        Application.Quit();
 
     }
 
