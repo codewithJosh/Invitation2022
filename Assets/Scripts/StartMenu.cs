@@ -1,8 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
 public class StartMenu : MonoBehaviour
 {
@@ -32,6 +32,7 @@ public class StartMenu : MonoBehaviour
     private enum StartMenuStates { idle, start, help, about, quit, select};
     private StartMenuStates startMenuState = StartMenuStates.idle;
 
+    private int[,,] MAP_INT;
     private string[] maleSkinNames;
     private string[] femaleSkinNames;
     private string[] mapNames;
@@ -78,17 +79,68 @@ public class StartMenu : MonoBehaviour
 
         };
 
+        MAP_INT = new int[5, 3, 2]
+        {
+
+            // MAPITA
+            { 
+
+                { 0, 60 }, 
+                { 0, 55 }, 
+                { 0, 50 } 
+
+            },
+
+            // LUNETA PARK
+            { 
+
+                { 0, 60 }, 
+                { 0, 55 }, 
+                { 0, 50 } 
+
+            },
+
+            // N/A
+            { 
+
+                { 0, 60 },
+                { 0, 55 },
+                { 0, 50 } 
+
+            },
+
+            // N/A
+            { 
+
+                { 0, 60 }, 
+                { 0, 55 }, 
+                { 0, 50 } 
+
+            },
+
+            // N/A
+            { 
+
+                { 0, 60 }, 
+                { 0, 55 }, 
+                { 0, 50 } 
+
+            }
+
+        };
+
         PlayerModel playerManager = Database.LoadPlayer();
 
         if (playerManager == null)
         {
 
-            FindObjectOfType<PlayerManager>().NewPlayer();
+            FindObjectOfType<PlayerManager>().NewPlayer(MAP_INT);
 
         }
 
         FindObjectOfType<PlayerManager>().LoadPlayer();
 
+        MAP_INT = FindObjectOfType<PlayerManager>().MAP_INT;
         lastSkinUsed = FindObjectOfType<PlayerManager>().lastSkinUsed;
         lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
         unlockedSkins = FindObjectOfType<PlayerManager>().unlockedSkins;
@@ -157,6 +209,7 @@ public class StartMenu : MonoBehaviour
         if (startMenuState == StartMenuStates.select)
         {
 
+            FindObjectOfType<PlayerManager>().MAP_INT = MAP_INT;
             FindObjectOfType<PlayerManager>().unlockedSkins = unlockedSkins;
             FindObjectOfType<PlayerManager>().unlockedMaps = unlockedMaps;
 
@@ -364,7 +417,6 @@ public class StartMenu : MonoBehaviour
     {
 
         int randomState = UnityEngine.Random.Range(0, 2);
-
         aboutBackground.sprite = abouts[randomState];
 
     }
@@ -405,7 +457,16 @@ public class StartMenu : MonoBehaviour
 
     private void OnAffirmativeRun()
     {
-        
+
+        lastSkinUsed = lastSkinUsed > unlockedSkins ? FindObjectOfType<PlayerManager>().lastSkinUsed : lastSkinUsed;
+        lastMapUsed = lastMapUsed > unlockedMaps ? FindObjectOfType<PlayerManager>().lastMapUsed : lastMapUsed;
+
+        FindObjectOfType<PlayerManager>().lastSkinUsed = lastSkinUsed;
+        FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
+        FindObjectOfType<PlayerManager>().SavePlayer();
+
+        PlayerPrefs.SetInt("index", lastMapUsed + 3);
+        SceneManager.LoadScene(1);
 
 
     }
