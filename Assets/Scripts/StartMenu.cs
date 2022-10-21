@@ -29,7 +29,7 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI skinUIText;
     [SerializeField] private TextMeshProUGUI mapUIText;
 
-    private enum StartMenuStates { idle, start, help, about, quit, select };
+    private enum StartMenuStates { idle, start, help, about, quit, select};
     private StartMenuStates startMenuState = StartMenuStates.idle;
 
     private string[] maleSkinNames;
@@ -319,7 +319,7 @@ public class StartMenu : MonoBehaviour
             if (SimpleInput.GetButtonDown("OnRun"))
             {
 
-
+                FindObjectOfType<GameManager>().OnAnimate("run");
 
             }
 
@@ -333,13 +333,6 @@ public class StartMenu : MonoBehaviour
 
                 int countdown = 2;
                 StartCoroutine(QuitToStart(countdown));
-
-            }
-
-            if (SimpleInput.GetButtonDown("OnNegativeQuit"))
-            {
-
-                OnBack();
 
             }
 
