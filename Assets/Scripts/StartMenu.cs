@@ -48,8 +48,8 @@ public class StartMenu : MonoBehaviour
         maleSkinNames = new string[] 
         { 
 
-            "Shanon", 
-            "Crypto",
+            "SHANON", 
+            "CRYPTO",
             "N/A",
             "N/A",
             "N/A"
@@ -59,8 +59,8 @@ public class StartMenu : MonoBehaviour
         femaleSkinNames = new string[] 
         { 
 
-            "Kate",
-            "Arissa",
+            "KATE",
+            "ARISSA",
             "N/A",
             "N/A",
             "N/A"
@@ -70,8 +70,8 @@ public class StartMenu : MonoBehaviour
         mapNames = new string[] 
         { 
 
-            "Mapita",
-            "Luneta Park",
+            "MAPITA",
+            "LUNETA PARK",
             "N/A",
             "N/A",
             "N/A"
@@ -109,24 +109,21 @@ public class StartMenu : MonoBehaviour
         if (SimpleInput.GetButtonDown("OnStart"))
         {
 
-            OnAnimateFromStartMenu(StartMenuStates.start);
-            OnCancel();
+            OnNavigation(StartMenuStates.start);
 
         }
 
         if (SimpleInput.GetButtonDown("OnHelp"))
         {
 
-            OnAnimateFromStartMenu(StartMenuStates.help);
-            OnCancel();
+            OnNavigation(StartMenuStates.help);
 
         }
 
         if (SimpleInput.GetButtonDown("OnAbout"))
         {
 
-            OnAnimateFromStartMenu(StartMenuStates.about);
-            OnCancel();
+            OnNavigation(StartMenuStates.about);
             OnAbout();
 
         }
@@ -134,8 +131,7 @@ public class StartMenu : MonoBehaviour
         if (SimpleInput.GetButtonDown("OnQuit"))
         {
 
-            OnAnimateFromStartMenu(StartMenuStates.quit);
-            OnCancel();
+            OnNavigation(StartMenuStates.quit);
 
         }
 
@@ -145,20 +141,14 @@ public class StartMenu : MonoBehaviour
             if (SimpleInput.GetButtonDown("OnMale"))
             {
 
-                isMale = true;
-                FindObjectOfType<GameManager>().OnAnimate("male");
-                int countdown = 1;
-                StartCoroutine(SelectSectionToStart(countdown));
+                OnCharacterPicking(true);
 
             }
 
             if (SimpleInput.GetButtonDown("OnFemale"))
             {
 
-                isMale = false;
-                FindObjectOfType<GameManager>().OnAnimate("female");
-                int countdown = 1;
-                StartCoroutine(SelectSectionToStart(countdown));
+                OnCharacterPicking(false);
 
             }
 
@@ -217,57 +207,10 @@ public class StartMenu : MonoBehaviour
 
             }
 
-            if (lastSkinUsed == 0)
-            {
-
-                skinPreviousUIButton.interactable = false;
-
-            }
-            else
-            {
-
-                skinPreviousUIButton.interactable = true;
-
-            }
-
-            if (lastSkinUsed < 4)
-            {
-
-                skinNextUIButton.interactable = true;
-
-            }
-            else
-            {
-
-                skinNextUIButton.interactable = false;
-
-            }
-
-            if (lastMapUsed == 0)
-            {
-
-                mapPreviousUIButton.interactable = false;
-
-            }
-            else
-            {
-
-                mapPreviousUIButton.interactable = true;
-
-            }
-
-            if (lastMapUsed < 4)
-            {
-
-                mapNextUIButton.interactable = true;
-
-            }
-            else
-            {
-
-                mapNextUIButton.interactable = false;
-
-            }
+            skinPreviousUIButton.interactable = lastSkinUsed == 0 ? false : true;
+            skinNextUIButton.interactable = lastSkinUsed < 4 ? true : false;
+            mapPreviousUIButton.interactable = lastMapUsed == 0 ? false : true;
+            mapNextUIButton.interactable = lastMapUsed < 4 ? true : false;
 
             if (SimpleInput.GetButtonDown("OnPreviousSkin"))
             {
@@ -323,6 +266,21 @@ public class StartMenu : MonoBehaviour
 
             }
 
+            if (SimpleInput.GetButtonDown("OnAffirmativeRun"))
+            {
+
+                OnAffirmativeRun();
+                FindObjectOfType<GameManager>().OnAnimate("run");
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnNegativeRun"))
+            {
+
+                FindObjectOfType<GameManager>().OnAnimate("run");
+
+            }
+
         }
 
         if (startMenuState == StartMenuStates.quit)
@@ -337,6 +295,24 @@ public class StartMenu : MonoBehaviour
             }
 
         }
+
+    }
+
+    private void OnNavigation(StartMenuStates _startMenuState)
+    {
+
+        OnAnimateFromStartMenu(_startMenuState);
+        OnCancel();
+
+    }
+
+    private void OnCharacterPicking(bool _isMale)
+    {
+
+        isMale = _isMale;
+        FindObjectOfType<GameManager>().OnAnimate(_isMale ? "male" : "female");
+        int countdown = 1;
+        StartCoroutine(SelectSectionToStart(countdown));
 
     }
 
@@ -424,6 +400,13 @@ public class StartMenu : MonoBehaviour
 
         PlayerPrefs.SetInt("index", 1);
         Application.Quit();
+
+    }
+
+    private void OnAffirmativeRun()
+    {
+        
+
 
     }
 
