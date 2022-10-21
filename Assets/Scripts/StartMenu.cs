@@ -167,6 +167,8 @@ public class StartMenu : MonoBehaviour
 
             skinHUD.sprite = isMale ? maleSkins[lastSkinUsed] : femaleSkins[lastSkinUsed];
             skinUIText.text = isMale ? maleSkinNames[lastSkinUsed] : femaleSkinNames[lastSkinUsed];
+            mapHUD.sprite = maps[lastMapUsed];
+            mapUIText.text = mapNames[lastMapUsed];
 
             if (lastSkinUsed <= unlockedSkins)
             {
@@ -189,13 +191,12 @@ public class StartMenu : MonoBehaviour
 
             }
 
-            /*if (lastMapUsed <= unlockedMaps)
+            if (lastMapUsed <= unlockedMaps)
             {
 
                 mapsTitleHUD.sprite = resources[3];
                 mapUITextHUD.sprite = resources[5];
-                mapHUD.sprite = maps[lastMapUsed];
-                mapUIText.text = mapNames[lastMapUsed];
+                mapFrameHUD.sprite = resources[11];
                 mapUIText.color = Color.white;
                 mapLockedHUD.SetActive(false);
 
@@ -205,12 +206,11 @@ public class StartMenu : MonoBehaviour
 
                 mapsTitleHUD.sprite = resources[2];
                 mapUITextHUD.sprite = resources[4];
-                mapHUD.sprite = lockedMaps[lastMapUsed];
-                mapUIText.text = mapNames[lastMapUsed];
+                mapFrameHUD.sprite = resources[10];
                 mapUIText.color = Color.black;
                 mapLockedHUD.SetActive(true);
 
-            }*/
+            }
 
             if (lastSkinUsed == 0)
             {
