@@ -7297,7 +7297,7 @@ GameObject:
   - component: {fileID: 1362346592}
   - component: {fileID: 1362346591}
   m_Layer: 5
-  m_Name: StepUIText
+  m_Name: RoundStepUIText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9934,15 +9934,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee4c24eee6120b49a5d5763ca49fd69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialCountdownUIText: {fileID: 260325405}
+  roundCountdownUIText: {fileID: 1332935043}
+  roundStepUIText: {fileID: 1362346591}
   respawnPoint: {x: 0, y: 0, z: 0}
-  countdownTime: 3
-  timeLeftTime: 120
-  stepState: 0
-  finalStep: 3
-  tag: 
-  countDownUIText: {fileID: 260325405}
-  timeLeftUIText: {fileID: 1332935043}
-  stepUIText: {fileID: 1362346591}
 --- !u!43 &1946289811
 Mesh:
   m_ObjectHideFlags: 0

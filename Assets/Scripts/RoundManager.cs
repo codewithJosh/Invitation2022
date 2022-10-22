@@ -5,43 +5,56 @@ using TMPro;
 public class RoundManager : MonoBehaviour
 {
 
-    public Vector3 respawnPoint;
-    public int countdownTime;
-    public int timeLeftTime;
-    public int stepState;
-    public int finalStep;
-    public string tag;
-    public TextMeshProUGUI countDownUIText;
-    public TextMeshProUGUI timeLeftUIText;
-    public TextMeshProUGUI stepUIText;
+    [SerializeField] private TextMeshProUGUI initialCountdownUIText;
+    [SerializeField] private TextMeshProUGUI roundCountdownUIText;
+    [SerializeField] private TextMeshProUGUI roundStepUIText;
+
+    [HideInInspector] public Vector3 respawnPoint;
+    private int initialCountdown;
+    private int roundCountdown;
+    private int lastRoundStep;
+    private int roundStep;
+    private int lastMapUsed;
+    private int lastMapDivisionUsed;
+    private string tag;
+    
 
     private void Awake()
     {
 
-        respawnPoint = new Vector3(transform.position.x, getRandomYPosition(), transform.position.z);
+        respawnPoint = new Vector3(transform.position.x, GetRandomYPosition(), transform.position.z);
         transform.position = respawnPoint;
         FindObjectOfType<PlayerMovement>().playerState = PlayerMovement.PlayerStates.idle;
 
     }
 
-    private float getRandomYPosition()
+    private float GetRandomYPosition()
     {
 
-        switch (Random.Range(0, 3))
+        return Random.Range(0, 3) switch
         {
 
-            case 0:
-                return 25f;
-            case 1:
-                return 15f;
+            0 => 25f,
 
-        }
-        return 5f;
+            1 => 15f,
+
+            _ => 5f,
+
+        };
 
     }
 
     void Start()
     {
+
+        initialCountdown = 8;
+
+        FindObjectOfType<PlayerManager>().LoadPlayer();
+
+        lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
+        lastMapDivisionUsed = FindObjectOfType<PlayerManager>().lastMapDivisionUsed;
+        roundCountdown = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, lastMapDivisionUsed, 1];
+        roundStep = FindObjectOfType<PlayerManager>().lastMapRoundStepUsed;
 
         StartCoroutine(CountdownToStart());
         OnStepState();
@@ -51,51 +64,51 @@ public class RoundManager : MonoBehaviour
     IEnumerator CountdownToStart()
     {
 
-        countDownUIText.color = Color.green;
+        initialCountdownUIText.color = Color.green;
 
-        while (countdownTime > 0)
+        while (initialCountdown > 0)
         {
 
-            countDownUIText.text = "READY---" + countdownTime.ToString();
+            initialCountdownUIText.text = "READY---" + initialCountdown.ToString();
 
             yield return new WaitForSeconds(1f);
 
-            countdownTime--;
+            initialCountdown--;
 
         }
 
-        countDownUIText.color = Color.red;
-        countDownUIText.text = "GO!";
+        initialCountdownUIText.color = Color.red;
+        initialCountdownUIText.text = "GO!";
         FindObjectOfType<PlayerMovement>().canMove = true;
         StartCoroutine(TimeLeftToStart());
 
         yield return new WaitForSeconds(1f);
 
-        countDownUIText.gameObject.SetActive(false);
+        initialCountdownUIText.gameObject.SetActive(false);
 
     }
 
     IEnumerator TimeLeftToStart()
     {
 
-        while (timeLeftTime >= 0)
+        while (roundCountdown >= 0)
         {
 
-            float minutes = Mathf.FloorToInt(timeLeftTime / 60);
-            float seconds = Mathf.FloorToInt(timeLeftTime % 60);
+            float minutes = Mathf.FloorToInt(roundCountdown / 60);
+            float seconds = Mathf.FloorToInt(roundCountdown % 60);
 
             if (minutes == 0 && seconds < 16)
             {
 
-                timeLeftUIText.color = Color.red;
+                roundCountdownUIText.color = Color.red;
 
             }
 
-            timeLeftUIText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            roundCountdownUIText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
             yield return new WaitForSeconds(1f);
 
-            timeLeftTime--;
+            roundCountdown--;
 
         }
 
@@ -128,8 +141,8 @@ public class RoundManager : MonoBehaviour
     public void OnStepState()
     {
 
-        stepState += 1;
-        stepUIText.text = stepState + "/" + finalStep;
+        lastRoundStep += 1;
+        roundStepUIText.text = lastRoundStep + "/" + roundStep;
 
     }
 
