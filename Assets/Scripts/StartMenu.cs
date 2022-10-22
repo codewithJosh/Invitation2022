@@ -479,8 +479,8 @@ public class StartMenu : MonoBehaviour
         FindObjectOfType<PlayerManager>().isMale = isMale;
         FindObjectOfType<PlayerManager>().lastSkinUsed = lastSkinUsed;
         FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
-        FindObjectOfType<PlayerManager>().lastMapDivisionUsed = lastMapDivisionUsed;
-        FindObjectOfType<PlayerManager>().lastMapRoundStepUsed = lastMapRoundStepUsed;
+        FindObjectOfType<PlayerManager>().lastDivisionUsed = lastMapDivisionUsed;
+        FindObjectOfType<PlayerManager>().lastRoundStepUsed = lastMapRoundStepUsed;
         FindObjectOfType<PlayerManager>().SavePlayer();
 
         PlayerPrefs.SetInt("index", lastMapUsed + 3);

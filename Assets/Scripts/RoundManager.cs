@@ -8,6 +8,9 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI initialCountdownUIText;
     [SerializeField] private TextMeshProUGUI roundCountdownUIText;
     [SerializeField] private TextMeshProUGUI roundStepUIText;
+    [SerializeField] private TextMeshProUGUI goldDivisionUIText;
+    [SerializeField] private TextMeshProUGUI silverDivisionUIText;
+    [SerializeField] private TextMeshProUGUI bronzeDivisionUIText;
 
     [HideInInspector] public Vector3 respawnPoint;
     private int initialCountdown;
@@ -15,7 +18,7 @@ public class RoundManager : MonoBehaviour
     private int lastRoundStep;
     private int roundStep;
     private int lastMapUsed;
-    private int lastMapDivisionUsed;
+    private int lastDivisionUsed;
     private string tag;
     
 
@@ -52,9 +55,18 @@ public class RoundManager : MonoBehaviour
         FindObjectOfType<PlayerManager>().LoadPlayer();
 
         lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
-        lastMapDivisionUsed = FindObjectOfType<PlayerManager>().lastMapDivisionUsed;
-        roundCountdown = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, lastMapDivisionUsed, 1];
-        roundStep = FindObjectOfType<PlayerManager>().lastMapRoundStepUsed;
+        lastDivisionUsed = FindObjectOfType<PlayerManager>().lastDivisionUsed;
+        roundCountdown = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, lastDivisionUsed, 1];
+
+        int goldDivison = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0];
+        int silverDivision = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0];
+        int bronzeDivision = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0];
+
+        goldDivisionUIText.text = GetTime(goldDivison);
+        silverDivisionUIText.text = GetTime(silverDivision);
+        bronzeDivisionUIText.text = GetTime(bronzeDivision);
+
+        roundStep = FindObjectOfType<PlayerManager>().lastRoundStepUsed;
 
         StartCoroutine(CountdownToStart());
         OnStepState();
@@ -143,6 +155,16 @@ public class RoundManager : MonoBehaviour
 
         lastRoundStep += 1;
         roundStepUIText.text = lastRoundStep + "/" + roundStep;
+
+    }
+
+    private string GetTime(int _divisionTimeInSeconds)
+    {
+
+        float minutes = Mathf.FloorToInt(_divisionTimeInSeconds / 60);
+        float seconds = Mathf.FloorToInt(_divisionTimeInSeconds % 60);
+
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
 
     }
 
