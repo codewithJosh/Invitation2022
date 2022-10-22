@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
 
+    [HideInInspector] public bool isMale;
     [HideInInspector] public int[,,] MAP_INT;
     [HideInInspector] public int lastSkinUsed;
     [HideInInspector] public int lastMapUsed;
@@ -12,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     public void NewPlayer(int[,,] _mAP_INT)
     {
 
+        isMale = false;
         MAP_INT = _mAP_INT;
         lastSkinUsed = 0;
         lastMapUsed = 0;
@@ -34,6 +36,7 @@ public class PlayerManager : MonoBehaviour
 
         PlayerModel playerManager = Database.LoadPlayer();
 
+        isMale = playerManager.isMale;
         MAP_INT = playerManager.MAP_INT;
         lastSkinUsed = playerManager.lastSkinUsed;
         lastMapUsed = playerManager.lastMapUsed;

@@ -461,6 +461,7 @@ public class StartMenu : MonoBehaviour
         lastSkinUsed = lastSkinUsed > unlockedSkins ? FindObjectOfType<PlayerManager>().lastSkinUsed : lastSkinUsed;
         lastMapUsed = lastMapUsed > unlockedMaps ? FindObjectOfType<PlayerManager>().lastMapUsed : lastMapUsed;
 
+        FindObjectOfType<PlayerManager>().isMale = isMale;
         FindObjectOfType<PlayerManager>().lastSkinUsed = lastSkinUsed;
         FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
         FindObjectOfType<PlayerManager>().SavePlayer();

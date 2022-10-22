@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
-public class Mapita : MonoBehaviour
+public class RoundManager : MonoBehaviour
 {
 
     public Vector3 respawnPoint;

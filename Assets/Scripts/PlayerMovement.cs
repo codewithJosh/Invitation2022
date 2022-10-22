@@ -3,27 +3,52 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public CharacterController controller;
-    public Animator animator;
+    [SerializeField] private CharacterController controller;
+    [SerializeField] private GameObject[] maleSkins;
+    [SerializeField] private GameObject[] femaleSkins;
+    [SerializeField] private Joystick joystick;
+    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private Transform groundCheck;
 
-    public enum PlayerStates { idle, isRunning, isJumping };
-    public PlayerStates playerState = PlayerStates.idle;
+    [HideInInspector] public enum PlayerStates { idle, isRunning, isJumping };
+    [HideInInspector] public PlayerStates playerState = PlayerStates.idle;
 
-    public float speed = 12f;
-    public float gravity = -9.81f;
-    public float jumpHeight = 3f;
-    public bool canMove;
+    private Animator animator;
+    private Vector3 velocity;
+    [HideInInspector] public bool canMove;
+    private bool isGrounded;
+    private float speed = 12f;
+    private float gravity = -19.62f;
+    private float jumpHeight = 3f;
+    private float groundDistance = 0.4f;
 
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-    public Joystick joystick;
-
-    Vector3 velocity;
-    bool isGrounded;
+    private bool isMale;
+    private int lastSkinUsed;
 
     void Start()
     {
+
+        FindObjectOfType<PlayerManager>().LoadPlayer();
+
+        isMale = FindObjectOfType<PlayerManager>().isMale;
+        lastSkinUsed = FindObjectOfType<PlayerManager>().lastSkinUsed;
+
+        animator = isMale 
+            ? maleSkins[lastSkinUsed].GetComponent<Animator>() 
+            : femaleSkins[lastSkinUsed].GetComponent<Animator>();
+
+        if (isMale)
+        {
+
+            maleSkins[lastSkinUsed].SetActive(true);
+
+        }
+        else
+        {
+
+            femaleSkins[lastSkinUsed].SetActive(true);
+
+        }
 
         canMove = false;
 
@@ -58,12 +83,19 @@ public class PlayerMovement : MonoBehaviour
             playerState = PlayerStates.idle;
         }
 
-        if (SimpleInput.GetButtonDown("Jump") && isGrounded && canMove)
+        if (SimpleInput.GetButtonDown("OnJump") && isGrounded && canMove)
         {
 
             playerState = PlayerStates.isJumping;
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             
+        }
+
+        if (SimpleInput.GetButtonDown("OnCrouch") && isGrounded && canMove)
+        {
+
+            
+
         }
 
         velocity.y += gravity * Time.deltaTime;
