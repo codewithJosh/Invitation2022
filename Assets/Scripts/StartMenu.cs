@@ -33,6 +33,7 @@ public class StartMenu : MonoBehaviour
     private StartMenuStates startMenuState = StartMenuStates.idle;
 
     private int[,,] MAP_INT;
+    private int[] MAP_ROUND_STEP_INT;
     private string[] maleSkinNames;
     private string[] femaleSkinNames;
     private string[] mapNames;
@@ -40,6 +41,8 @@ public class StartMenu : MonoBehaviour
     private bool isMale;
     private int lastSkinUsed;
     private int lastMapUsed;
+    private int lastMapDivisionUsed;
+    private int lastMapRoundStepUsed;
     private int unlockedSkins;
     private int unlockedMaps;
 
@@ -49,7 +52,7 @@ public class StartMenu : MonoBehaviour
         maleSkinNames = new string[] 
         { 
 
-            "SHANON", 
+            "SHANNON", 
             "CRYPTO",
             "N/A",
             "N/A",
@@ -83,49 +86,60 @@ public class StartMenu : MonoBehaviour
         {
 
             // MAPITA
-            { 
+            {
 
-                { 0, 60 }, 
-                { 0, 55 }, 
-                { 0, 50 } 
+                { 0, 70 },
+                { 0, 65 },
+                { 0, 60 }
 
             },
 
             // LUNETA PARK
             { 
 
-                { 0, 60 }, 
-                { 0, 55 }, 
-                { 0, 50 } 
+                { 0, 70 }, 
+                { 0, 65 }, 
+                { 0, 60 } 
 
             },
 
             // N/A
-            { 
+            {
 
-                { 0, 60 },
-                { 0, 55 },
-                { 0, 50 } 
-
-            },
-
-            // N/A
-            { 
-
-                { 0, 60 }, 
-                { 0, 55 }, 
-                { 0, 50 } 
+                { 0, 70 },
+                { 0, 65 },
+                { 0, 60 }
 
             },
 
             // N/A
-            { 
+            {
 
-                { 0, 60 }, 
-                { 0, 55 }, 
-                { 0, 50 } 
+                { 0, 70 },
+                { 0, 65 },
+                { 0, 60 }
+
+            },
+
+            // N/A
+            {
+
+                { 0, 70 },
+                { 0, 65 },
+                { 0, 60 }
 
             }
+
+        };
+
+        MAP_ROUND_STEP_INT = new int[]
+        {
+
+            3,
+            4,
+            4,
+            4,
+            4,
 
         };
 
@@ -460,9 +474,13 @@ public class StartMenu : MonoBehaviour
 
         lastSkinUsed = lastSkinUsed > unlockedSkins ? FindObjectOfType<PlayerManager>().lastSkinUsed : lastSkinUsed;
         lastMapUsed = lastMapUsed > unlockedMaps ? FindObjectOfType<PlayerManager>().lastMapUsed : lastMapUsed;
+        lastMapRoundStepUsed = MAP_ROUND_STEP_INT[lastMapUsed];
 
+        FindObjectOfType<PlayerManager>().isMale = isMale;
         FindObjectOfType<PlayerManager>().lastSkinUsed = lastSkinUsed;
         FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
+        FindObjectOfType<PlayerManager>().lastDivisionUsed = lastMapDivisionUsed;
+        FindObjectOfType<PlayerManager>().lastRoundStepUsed = lastMapRoundStepUsed;
         FindObjectOfType<PlayerManager>().SavePlayer();
 
         PlayerPrefs.SetInt("index", lastMapUsed + 3);
