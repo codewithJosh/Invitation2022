@@ -12,6 +12,9 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private Button mapNextUIButton;
     [SerializeField] private GameObject skinLockedHUD;
     [SerializeField] private GameObject mapLockedHUD;
+    [SerializeField] private GameObject bronzeDivisionCheckHUD;
+    [SerializeField] private GameObject silverDivisionCheckHUD;
+    [SerializeField] private GameObject goldDivisionCheckHUD;
     [SerializeField] private Image skinHUD;
     [SerializeField] private Image skinFrameHUD;
     [SerializeField] private Image skinsTitleHUD;
@@ -28,57 +31,69 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private Sprite[] abouts;
     [SerializeField] private TextMeshProUGUI skinUIText;
     [SerializeField] private TextMeshProUGUI mapUIText;
+    [SerializeField] private TextMeshProUGUI finishWithinUIText;
+    [SerializeField] private TextMeshProUGUI secondsUIText;
+    [SerializeField] private TextMeshProUGUI mapCountdownUIText;
 
     private enum StartMenuStates { idle, start, help, about, quit, select};
     private StartMenuStates startMenuState = StartMenuStates.idle;
+    private enum DivisionStates { idle, bronze, silver, gold};
+    private DivisionStates divisionState = DivisionStates.idle;
 
     private int[,,] MAP_INT;
+    private string[,,] SkinNames;
+    private string[,] mapNames;
     private int[] MAP_ROUND_STEP_INT;
-    private string[] maleSkinNames;
-    private string[] femaleSkinNames;
-    private string[] mapNames;
 
     private bool isMale;
     private int lastSkinUsed;
     private int lastMapUsed;
-    private int lastMapDivisionUsed;
-    private int lastMapRoundStepUsed;
+    private int lastDivisionUsed;
+    private int lastRoundStepUsed;
     private int unlockedSkins;
     private int unlockedMaps;
 
     void Start()
     {
 
-        maleSkinNames = new string[] 
-        { 
+        SkinNames = new string[5, 2, 2]
+        {
 
-            "SHANNON", 
-            "CRYPTO",
-            "N/A",
-            "N/A",
-            "N/A"
+           { 
+                { "SHANNON", "" },
+                { "KATE", "" } 
+           },
+
+           { 
+                { "CRYPTO", "UNLOCK NEXT MAP" },
+                { "ARISSA", "UNLOCK NEXT MAP" } 
+           },
+
+           { 
+                { "N/A", "N/A" },
+                { "N/A", "N/A" } 
+           },
+
+           { 
+                { "N/A", "N/A" },
+                { "N/A", "N/A" } 
+           },
+
+           { 
+                { "N/A", "N/A" },
+                { "N/A", "N/A" } 
+           }
 
         };
 
-        femaleSkinNames = new string[] 
-        { 
+        mapNames = new string[5, 2] 
+        {
 
-            "KATE",
-            "ARISSA",
-            "N/A",
-            "N/A",
-            "N/A"
-
-        };
-
-        mapNames = new string[] 
-        { 
-
-            "MAPITA",
-            "LUNETA PARK",
-            "N/A",
-            "N/A",
-            "N/A"
+            { "MAPITA", "" },
+            { "LUNETA PARK", "N/A" },
+            { "N/A", "N/A" },
+            { "N/A", "N/A" },
+            { "N/A", "N/A" }
 
         };
 
@@ -228,9 +243,7 @@ public class StartMenu : MonoBehaviour
             FindObjectOfType<PlayerManager>().unlockedMaps = unlockedMaps;
 
             skinHUD.sprite = isMale ? maleSkins[lastSkinUsed] : femaleSkins[lastSkinUsed];
-            skinUIText.text = isMale ? maleSkinNames[lastSkinUsed] : femaleSkinNames[lastSkinUsed];
             mapHUD.sprite = maps[lastMapUsed];
-            mapUIText.text = mapNames[lastMapUsed];
 
             if (lastSkinUsed <= unlockedSkins)
             {
@@ -238,6 +251,7 @@ public class StartMenu : MonoBehaviour
                 skinsTitleHUD.sprite = resources[1];
                 skinUITextHUD.sprite = resources[5];
                 skinFrameHUD.sprite = resources[7];
+                skinUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 0] : SkinNames[lastSkinUsed, 1, 0];
                 skinUIText.color = Color.white;
                 skinLockedHUD.SetActive(false);
 
@@ -248,6 +262,7 @@ public class StartMenu : MonoBehaviour
                 skinsTitleHUD.sprite = resources[0];
                 skinUITextHUD.sprite = resources[4];
                 skinFrameHUD.sprite = resources[6];
+                skinUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 1] : SkinNames[lastSkinUsed, 1, 1];
                 skinUIText.color = Color.black;
                 skinLockedHUD.SetActive(true);
 
@@ -256,19 +271,88 @@ public class StartMenu : MonoBehaviour
             if (lastMapUsed <= unlockedMaps)
             {
 
+                bronzeDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0] != 0 ? true : false);
+                silverDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0] != 0 ? true : false);
+                goldDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] != 0 ? true : false);
                 mapsTitleHUD.sprite = resources[3];
                 mapUITextHUD.sprite = resources[5];
-                mapFrameHUD.sprite = resources[7];
+                mapUIText.text = mapNames[lastMapUsed, 0];
                 mapUIText.color = Color.white;
                 mapLockedHUD.SetActive(false);
+                finishWithinUIText.enabled = true;
+                mapCountdownUIText.enabled = true;
+                mapCountdownUIText.text = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, lastDivisionUsed, 1].ToString();
+                secondsUIText.enabled = true;
+
+                if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] != 0)
+                {
+
+                    mapFrameHUD.sprite = resources[10];
+
+                }
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0] != 0)
+                {
+
+                    mapFrameHUD.sprite = resources[9];
+
+                }
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0] != 0)
+                {
+
+                    mapFrameHUD.sprite = resources[8];
+
+                }
+                else
+                {
+
+                    mapFrameHUD.sprite = resources[7];
+
+                }
+
+                if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0] == 0)
+                {
+
+                    lastDivisionUsed = 0;
+                    OnAnimateFromSelectSection(DivisionStates.bronze);
+
+                }
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0] == 0)
+                {
+
+                    lastDivisionUsed = 1;
+                    OnAnimateFromSelectSection(DivisionStates.silver);
+
+                }
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] == 0)
+                {
+
+                    lastDivisionUsed = 2;
+                    OnAnimateFromSelectSection(DivisionStates.gold);
+
+                }
+                else
+                {
+
+                    lastDivisionUsed = 2;
+                    OnAnimateFromSelectSection(DivisionStates.idle);
+
+                }
 
             }
             else
             {
 
+                bronzeDivisionCheckHUD.SetActive(false);
+                silverDivisionCheckHUD.SetActive(false);
+                goldDivisionCheckHUD.SetActive(false);
+                OnAnimateFromSelectSection(DivisionStates.idle);
+                finishWithinUIText.enabled = false;
+                mapCountdownUIText.enabled = false;
+                secondsUIText.enabled = false;
                 mapsTitleHUD.sprite = resources[2];
                 mapUITextHUD.sprite = resources[4];
                 mapFrameHUD.sprite = resources[6];
+                mapUIText.text = mapNames[lastMapUsed, 1];
                 mapUIText.color = Color.black;
                 mapLockedHUD.SetActive(true);
 
@@ -474,18 +558,25 @@ public class StartMenu : MonoBehaviour
 
         lastSkinUsed = lastSkinUsed > unlockedSkins ? FindObjectOfType<PlayerManager>().lastSkinUsed : lastSkinUsed;
         lastMapUsed = lastMapUsed > unlockedMaps ? FindObjectOfType<PlayerManager>().lastMapUsed : lastMapUsed;
-        lastMapRoundStepUsed = MAP_ROUND_STEP_INT[lastMapUsed];
+        lastRoundStepUsed = MAP_ROUND_STEP_INT[lastMapUsed];
 
         FindObjectOfType<PlayerManager>().isMale = isMale;
         FindObjectOfType<PlayerManager>().lastSkinUsed = lastSkinUsed;
         FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
-        FindObjectOfType<PlayerManager>().lastDivisionUsed = lastMapDivisionUsed;
-        FindObjectOfType<PlayerManager>().lastRoundStepUsed = lastMapRoundStepUsed;
+        FindObjectOfType<PlayerManager>().lastDivisionUsed = lastDivisionUsed;
+        FindObjectOfType<PlayerManager>().lastRoundStepUsed = lastRoundStepUsed;
         FindObjectOfType<PlayerManager>().SavePlayer();
 
         PlayerPrefs.SetInt("index", lastMapUsed + 3);
         SceneManager.LoadScene(1);
 
+    }
+
+    private void OnAnimateFromSelectSection(DivisionStates _divisionState)
+    {
+
+        divisionState = _divisionState;
+        FindObjectOfType<GameManager>().GetAnimator.SetInteger("divisionState", (int) divisionState);
 
     }
 
