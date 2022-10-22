@@ -13,6 +13,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bronzeDivisionUIText;
 
     [HideInInspector] public Vector3 respawnPoint;
+    private bool isDied;
     private int initialCountdown;
     private int roundCountdown;
     private int lastRoundStep;
@@ -34,14 +35,14 @@ public class RoundManager : MonoBehaviour
     private float GetRandomYPosition()
     {
 
-        return Random.Range(0, 3) switch
+        return Random.Range(0, 1) switch
         {
 
-            0 => 25f,
+            0 => 21.86727f,
 
-            1 => 15f,
+            1 => 11.83727f,
 
-            _ => 5f,
+            _ => 1.782271f,
 
         };
 
@@ -50,13 +51,14 @@ public class RoundManager : MonoBehaviour
     void Start()
     {
 
-        initialCountdown = 8;
+        initialCountdown = 3;
 
         FindObjectOfType<PlayerManager>().LoadPlayer();
 
         lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
         lastDivisionUsed = FindObjectOfType<PlayerManager>().lastDivisionUsed;
         roundCountdown = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, lastDivisionUsed, 1];
+        roundStep = FindObjectOfType<PlayerManager>().lastRoundStepUsed;
 
         int goldDivison = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0];
         int silverDivision = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0];
@@ -66,7 +68,7 @@ public class RoundManager : MonoBehaviour
         silverDivisionUIText.text = GetTime(silverDivision);
         bronzeDivisionUIText.text = GetTime(bronzeDivision);
 
-        roundStep = FindObjectOfType<PlayerManager>().lastRoundStepUsed;
+        
 
         StartCoroutine(CountdownToStart());
         OnStepState();
@@ -125,6 +127,7 @@ public class RoundManager : MonoBehaviour
         }
 
         FindObjectOfType<PlayerMovement>().canMove = false;
+        FindObjectOfType<PlayerMovement>().isDying = true;
 
         yield return new WaitForSeconds(1f);
 
@@ -144,7 +147,16 @@ public class RoundManager : MonoBehaviour
         if (transform.position.y < -20f)
         {
 
-            transform.position = respawnPoint;
+            if (!isDied)
+            {
+
+                isDied = true;
+                FindObjectOfType<PlayerMovement>().isDied = true;
+                
+            }
+
+            int countdown = 1;
+            StartCoroutine(OnRespawnToStart(countdown));
 
         }
 
@@ -165,6 +177,24 @@ public class RoundManager : MonoBehaviour
         float seconds = Mathf.FloorToInt(_divisionTimeInSeconds % 60);
 
         return string.Format("{0:00}:{1:00}", minutes, seconds);
+
+    }
+
+    IEnumerator OnRespawnToStart(int _countdown)
+    {
+
+        while (_countdown > 0)
+        {
+
+            yield return new WaitForSeconds(1f);
+
+            _countdown--;
+
+        }
+
+        isDied = false;
+        FindObjectOfType<PlayerMovement>().isDied = false;
+        transform.position = respawnPoint;
 
     }
 

@@ -10,12 +10,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Transform groundCheck;
 
-    [HideInInspector] public enum PlayerStates { idle, isRunning, isJumping };
+    [HideInInspector] public enum PlayerStates { idle, isRunning, isJumping, isDied, isDying};
     [HideInInspector] public PlayerStates playerState = PlayerStates.idle;
 
     private Animator animator;
     private Vector3 velocity;
     [HideInInspector] public bool canMove;
+    [HideInInspector] public bool isDied;
+    [HideInInspector] public bool isDying;
     private bool isGrounded;
     private float speed = 12f;
     private float gravity = -19.62f;
@@ -95,6 +97,20 @@ public class PlayerMovement : MonoBehaviour
         {
 
             
+
+        }
+
+        if (isDied)
+        {
+
+            playerState = PlayerStates.isDied;
+
+        }
+
+        if (isDying)
+        {
+
+            playerState = PlayerStates.isDying;
 
         }
 

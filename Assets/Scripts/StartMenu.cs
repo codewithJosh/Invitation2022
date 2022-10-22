@@ -90,10 +90,10 @@ public class StartMenu : MonoBehaviour
         {
 
             { "MAPITA", "" },
-            { "LUNETA PARK", "N/A" },
-            { "N/A", "N/A" },
-            { "N/A", "N/A" },
-            { "N/A", "N/A" }
+            { "LUNETA PARK", "UNLOCK 1 GOLD MAP" },
+            { "MARAWI", "UNLOCK 2 GOLD MAP" },
+            { "CORON", "UNLOCK 3 GOLD MAP" },
+            { "SAN JUANICO", "UNLOCK 4 GOLD MAP" }
 
         };
 
