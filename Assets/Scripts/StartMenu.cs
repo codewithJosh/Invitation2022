@@ -49,7 +49,7 @@ public class StartMenu : MonoBehaviour
         maleSkinNames = new string[] 
         { 
 
-            "SHANON", 
+            "SHANNON", 
             "CRYPTO",
             "N/A",
             "N/A",

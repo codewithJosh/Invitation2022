@@ -11,9 +11,9 @@ public class Mapita : MonoBehaviour
     public int stepState;
     public int finalStep;
     public string tag;
-    public TextMeshProUGUI countdown;
-    public TextMeshProUGUI timeLeft;
-    public TextMeshProUGUI step;
+    public TextMeshProUGUI countDownUIText;
+    public TextMeshProUGUI timeLeftUIText;
+    public TextMeshProUGUI stepUIText;
 
     private void Awake()
     {
@@ -51,12 +51,12 @@ public class Mapita : MonoBehaviour
     IEnumerator CountdownToStart()
     {
 
-        countdown.color = Color.green;
+        countDownUIText.color = Color.green;
 
         while (countdownTime > 0)
         {
 
-            countdown.text = "READY---" + countdownTime.ToString();
+            countDownUIText.text = "READY---" + countdownTime.ToString();
 
             yield return new WaitForSeconds(1f);
 
@@ -64,14 +64,14 @@ public class Mapita : MonoBehaviour
 
         }
 
-        countdown.color = Color.red;
-        countdown.text = "GO!";
+        countDownUIText.color = Color.red;
+        countDownUIText.text = "GO!";
         FindObjectOfType<PlayerMovement>().canMove = true;
         StartCoroutine(TimeLeftToStart());
 
         yield return new WaitForSeconds(1f);
 
-        countdown.gameObject.SetActive(false);
+        countDownUIText.gameObject.SetActive(false);
 
     }
 
@@ -87,11 +87,11 @@ public class Mapita : MonoBehaviour
             if (minutes == 0 && seconds < 16)
             {
 
-                timeLeft.color = Color.red;
+                timeLeftUIText.color = Color.red;
 
             }
 
-            timeLeft.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timeLeftUIText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
             yield return new WaitForSeconds(1f);
 
@@ -129,7 +129,7 @@ public class Mapita : MonoBehaviour
     {
 
         stepState += 1;
-        step.text = stepState + "/" + finalStep;
+        stepUIText.text = stepState + "/" + finalStep;
 
     }
 
