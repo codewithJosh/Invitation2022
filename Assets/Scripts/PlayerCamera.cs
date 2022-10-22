@@ -3,9 +3,9 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
 
-    public float mouseSensitivity = 100f;
+    [HideInInspector] public float mouseSensitivity = 100f;
     public Transform player;
-    float xRotation = 20f;
+    private float xRotation = 20f;
 
     void Start()
     {
