@@ -28,6 +28,7 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private Image mapsTitleHUD;
     [SerializeField] private Image mapUITextHUD;
     [SerializeField] private Image aboutBackground;
+    [SerializeField] private Image levelExpFillHUD;
     [SerializeField] private Sprite[] resources;
     [SerializeField] private Sprite[] maleSkins;
     [SerializeField] private Sprite[] femaleSkins;
@@ -40,6 +41,8 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI mapCountdownUIText;
     [SerializeField] private TextMeshProUGUI skinLockedUIText;
     [SerializeField] private TextMeshProUGUI mapLockedUIText;
+    [SerializeField] private TextMeshProUGUI levelUIText;
+    [SerializeField] private TextMeshProUGUI levelExpUIText;
 
     private enum StartMenuStates { idle, start, help, about, quit, select};
     private StartMenuStates startMenuState = StartMenuStates.idle;
@@ -122,7 +125,7 @@ public class StartMenu : MonoBehaviour
                 // MAPITA
                 {
 
-                    { 0, 200 },
+                    { 0, 70 },
                     { 0, 65 },
                     { 0, 60 }
 
