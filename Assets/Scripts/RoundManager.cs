@@ -25,7 +25,7 @@ public class RoundManager : MonoBehaviour
     private int isMale;
     private int lastMapUsed;
     private int lastDivisionUsed;
-    private string tag;
+    [HideInInspector] public string lastTag;
 
     private void Awake()
     {
@@ -56,7 +56,7 @@ public class RoundManager : MonoBehaviour
     {
 
         initialCountdown = 3;
-        coroutine = TimeLeftToStart();
+        coroutine = CountdownToStart();
 
         FindObjectOfType<PlayerManager>().LoadPlayer();
 
@@ -74,7 +74,7 @@ public class RoundManager : MonoBehaviour
         silverDivisionUIText.text = GetTime(silverDivision);
         bronzeDivisionUIText.text = GetTime(bronzeDivision);
 
-        StartCoroutine(CountdownToStart());
+        StartCoroutine(coroutine);
         OnStepState();
 
     }
@@ -98,6 +98,7 @@ public class RoundManager : MonoBehaviour
         initialCountdownUIText.color = Color.red;
         initialCountdownUIText.text = "GO!";
         FindObjectOfType<PlayerMovement>().canMove = true;
+        coroutine = TimeLeftToStart();
         StartCoroutine(coroutine);
 
         yield return new WaitForSeconds(1f);

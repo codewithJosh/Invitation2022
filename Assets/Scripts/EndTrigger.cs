@@ -8,16 +8,17 @@ public class EndTrigger : MonoBehaviour
 
         string tag = gameObject.tag;
 
-        if (FindObjectOfType<RoundManager>().tag != tag)
+        if (FindObjectOfType<RoundManager>().lastTag != tag)
         {
 
             Vector3 position = gameObject.transform.position;
 
-            FindObjectOfType<RoundManager>().respawnPoint = new Vector3(position.x + getXRandomPosition(), position.y, position.z);
-            FindObjectOfType<RoundManager>().tag = tag;
+            FindObjectOfType<RoundManager>().respawnPoint = new Vector3(position.x + getXRandomPosition(), position.y - 5f, position.z);
+            FindObjectOfType<RoundManager>().lastTag = tag;
             FindObjectOfType<RoundManager>().OnStepState();
 
         }
+
         if (tag == "Finish")
         {
 
@@ -31,16 +32,16 @@ public class EndTrigger : MonoBehaviour
     private float getXRandomPosition()
     {
 
-        switch (Random.Range(0, 3))
+        return Random.Range(0, 3) switch
         {
 
-            case 0:
-                return -10f;
-            case 1:
-                return 10f;
+            0 => -10f,
 
-        }
-        return 0;
+            1 => 10f,
+
+            _ => 0,
+
+        };
 
     }
 

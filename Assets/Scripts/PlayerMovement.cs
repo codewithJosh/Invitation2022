@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
         isMale = FindObjectOfType<PlayerManager>().isMale;
         lastSkinUsed = FindObjectOfType<PlayerManager>().lastSkinUsed;
 
+        canMove = false;
         animator = isMale == 1
             ? maleSkins[lastSkinUsed].GetComponent<Animator>() 
             : femaleSkins[lastSkinUsed].GetComponent<Animator>();
@@ -51,8 +52,6 @@ public class PlayerMovement : MonoBehaviour
             femaleSkins[lastSkinUsed].SetActive(true);
 
         }
-
-        canMove = false;
 
     }
 
@@ -82,7 +81,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+
             playerState = PlayerStates.idle;
+
         }
 
         if (SimpleInput.GetButtonDown("OnJump") && isGrounded && canMove)
