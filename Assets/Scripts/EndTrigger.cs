@@ -21,7 +21,7 @@ public class EndTrigger : MonoBehaviour
         else if (FindObjectOfType<RoundManager>().tag == "Finish")
         {
 
-
+            Debug.Log("Done");
 
         }
 

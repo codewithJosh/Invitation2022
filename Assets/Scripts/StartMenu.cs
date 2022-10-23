@@ -17,6 +17,8 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private GameObject goldDivisionCheckHUD;
     [SerializeField] private GameObject skinForeground;
     [SerializeField] private GameObject mapForeground;
+    [SerializeField] private GameObject skinUnknownHUD;
+    [SerializeField] private GameObject mapUnknownHUD;
     [SerializeField] private Image skinHUD;
     [SerializeField] private Image skinFrameHUD;
     [SerializeField] private Image skinsTitleHUD;
@@ -120,7 +122,7 @@ public class StartMenu : MonoBehaviour
                 // MAPITA
                 {
 
-                    { 0, 70 },
+                    { 0, 200 },
                     { 0, 65 },
                     { 0, 60 }
 
@@ -326,6 +328,7 @@ public class StartMenu : MonoBehaviour
                 skinUIText.color = Color.white;
                 skinLockedHUD.SetActive(false);
                 skinForeground.SetActive(false);
+                skinUnknownHUD.SetActive(false);
 
             }
             else
@@ -338,6 +341,7 @@ public class StartMenu : MonoBehaviour
                 skinUIText.color = Color.black;
                 skinLockedHUD.SetActive(true);
                 skinForeground.SetActive(true);
+                skinUnknownHUD.SetActive(true);
 
             }
 
@@ -353,6 +357,7 @@ public class StartMenu : MonoBehaviour
                 mapUIText.color = Color.white;
                 mapLockedHUD.SetActive(false);
                 mapForeground.SetActive(false);
+                mapUnknownHUD.SetActive(false);
                 finishWithinUIText.enabled = true;
                 mapCountdownUIText.enabled = true;
                 mapCountdownUIText.text = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, lastDivisionUsed, 1].ToString();
@@ -430,6 +435,7 @@ public class StartMenu : MonoBehaviour
                 mapUIText.color = Color.black;
                 mapLockedHUD.SetActive(true);
                 mapForeground.SetActive(true);
+                mapUnknownHUD.SetActive(true);
 
             }
 
