@@ -15,7 +15,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bronzeDivisionUIText;
     [SerializeField] private Toggle audioUIButton;
 
-    private enum GameStates { idle, pause, restart};
+    private enum GameStates { idle, pause, restart, startMenu};
     private GameStates gameState = GameStates.idle;
 
     private IEnumerator coroutine;
@@ -172,8 +172,7 @@ public class RoundManager : MonoBehaviour
         if (SimpleInput.GetButtonDown("OnStartMenu"))
         {
 
-            PlayerPrefs.SetInt("index", 2);
-            SceneManager.LoadScene(1);
+            gameState = GameStates.startMenu;
 
         }
 
@@ -190,6 +189,27 @@ public class RoundManager : MonoBehaviour
             }
 
             if (SimpleInput.GetButtonDown("OnNegativeRestart"))
+            {
+
+                gameState = GameStates.pause;
+
+            }
+
+        }
+
+        if (gameState == GameStates.startMenu)
+        {
+
+            if (SimpleInput.GetButtonDown("OnAffirmativeStartMenu"))
+            {
+
+                gameState = GameStates.pause;
+                PlayerPrefs.SetInt("index", 2);
+                SceneManager.LoadScene(1);
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnNegativeStartMenu"))
             {
 
                 gameState = GameStates.pause;
