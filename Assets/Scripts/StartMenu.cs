@@ -244,6 +244,8 @@ public class StartMenu : MonoBehaviour
 
             skinHUD.sprite = isMale ? maleSkins[lastSkinUsed] : femaleSkins[lastSkinUsed];
             mapHUD.sprite = maps[lastMapUsed];
+            skinUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 0] : SkinNames[lastSkinUsed, 1, 0];
+            mapUIText.text = mapNames[lastMapUsed, 0];
 
             if (lastSkinUsed <= unlockedSkins)
             {
@@ -251,7 +253,6 @@ public class StartMenu : MonoBehaviour
                 skinsTitleHUD.sprite = resources[1];
                 skinUITextHUD.sprite = resources[5];
                 skinFrameHUD.sprite = resources[7];
-                skinUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 0] : SkinNames[lastSkinUsed, 1, 0];
                 skinUIText.color = Color.white;
                 skinLockedHUD.SetActive(false);
 
@@ -262,7 +263,6 @@ public class StartMenu : MonoBehaviour
                 skinsTitleHUD.sprite = resources[0];
                 skinUITextHUD.sprite = resources[4];
                 skinFrameHUD.sprite = resources[6];
-                skinUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 1] : SkinNames[lastSkinUsed, 1, 1];
                 skinUIText.color = Color.black;
                 skinLockedHUD.SetActive(true);
 
@@ -276,7 +276,6 @@ public class StartMenu : MonoBehaviour
                 goldDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] != 0 ? true : false);
                 mapsTitleHUD.sprite = resources[3];
                 mapUITextHUD.sprite = resources[5];
-                mapUIText.text = mapNames[lastMapUsed, 0];
                 mapUIText.color = Color.white;
                 mapLockedHUD.SetActive(false);
                 finishWithinUIText.enabled = true;
@@ -352,7 +351,6 @@ public class StartMenu : MonoBehaviour
                 mapsTitleHUD.sprite = resources[2];
                 mapUITextHUD.sprite = resources[4];
                 mapFrameHUD.sprite = resources[6];
-                mapUIText.text = mapNames[lastMapUsed, 1];
                 mapUIText.color = Color.black;
                 mapLockedHUD.SetActive(true);
 
