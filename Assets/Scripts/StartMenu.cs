@@ -257,6 +257,7 @@ public class StartMenu : MonoBehaviour
                 skinsTitleHUD.sprite = resources[1];
                 skinUITextHUD.sprite = resources[5];
                 skinFrameHUD.sprite = resources[7];
+                skinLockedUIText.text = "";
                 skinUIText.color = Color.white;
                 skinLockedHUD.SetActive(false);
                 skinForeground.SetActive(false);
@@ -283,6 +284,7 @@ public class StartMenu : MonoBehaviour
                 goldDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] != 0 ? true : false);
                 mapsTitleHUD.sprite = resources[3];
                 mapUITextHUD.sprite = resources[5];
+                mapLockedUIText.text = "";
                 mapUIText.color = Color.white;
                 mapLockedHUD.SetActive(false);
                 mapForeground.SetActive(false);
