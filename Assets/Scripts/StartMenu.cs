@@ -50,6 +50,7 @@ public class StartMenu : MonoBehaviour
     private DivisionStates divisionState = DivisionStates.idle;
 
     private int[,,,] MAP_INT;
+    private int[] LEVEL_INT;
     private string[,,] SkinNames;
     private string[,] mapNames;
     private int[] MAP_ROUND_STEP_INT;
@@ -61,6 +62,8 @@ public class StartMenu : MonoBehaviour
     private int lastRoundStepUsed;
     private int unlockedSkins;
     private int unlockedMaps;
+    private int level;
+    private int levelEXP;
 
     void Start()
     {
@@ -77,29 +80,29 @@ public class StartMenu : MonoBehaviour
 
            { 
 
-                { "CRYPTO", "UNLOCK NEXT MAP" },
-                { "ARISSA", "UNLOCK NEXT MAP" } 
+                { "CRYPTO", "UNLOCK AT LEVEL 2" },
+                { "ARISSA", "UNLOCK AT LEVEL 3" } 
 
            },
 
            { 
 
-                { "N/A", "UNLOCK NEXT MAP" },
-                { "N/A", "UNLOCK NEXT MAP" } 
+                { "N/A", "UNLOCK AT LEVEL 4" },
+                { "N/A", "UNLOCK AT LEVEL 5" } 
 
            },
 
            { 
 
-                { "N/A", "UNLOCK NEXT MAP" },
-                { "N/A", "UNLOCK NEXT MAP" } 
+                { "N/A", "UNLOCK AT LEVEL 6" },
+                { "N/A", "UNLOCK AT LEVEL 7" } 
 
            },
 
            { 
 
-                { "N/A", "UNLOCK NEXT MAP" },
-                { "N/A", "UNLOCK NEXT MAP" } 
+                { "N/A", "UNLOCK AT LEVEL 8" },
+                { "N/A", "UNLOCK AT LEVEL 9" } 
 
            }
 
@@ -111,8 +114,8 @@ public class StartMenu : MonoBehaviour
             { "MAPITA", "" },
             { "LUNETA PARK", "UNLOCK 1 GOLD MAP" },
             { "MARAWI", "UNLOCK 2 GOLD MAP" },
-            { "CORON", "UNLOCK 3 GOLD MAP" },
-            { "SAN JUANICO", "UNLOCK 4 GOLD MAP" }
+            { "CORON", "UNLOCK 4 GOLD MAP" },
+            { "SAN JUANICO", "UNLOCK 8 GOLD MAP" }
 
         };
 
@@ -232,6 +235,27 @@ public class StartMenu : MonoBehaviour
 
         };
 
+        LEVEL_INT = new int[]
+        {
+
+            0,
+            1500,
+            3000,
+            4500,
+            6000,
+            7500,
+            9000,
+            10500,
+            12000,
+            13500,
+            15000,
+            16500,
+            18000,
+            19500,
+            21000
+
+        };
+
         PlayerModel playerManager = Database.LoadPlayer();
 
         if (playerManager == null)
@@ -248,11 +272,17 @@ public class StartMenu : MonoBehaviour
         lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
         unlockedSkins = FindObjectOfType<PlayerManager>().unlockedSkins;
         unlockedMaps = FindObjectOfType<PlayerManager>().unlockedMaps;
+        level = FindObjectOfType<PlayerManager>().level;
+        levelEXP = FindObjectOfType<PlayerManager>().levelEXP;
 
     }
 
     void Update()
     {
+
+        levelUIText.text = level.ToString();
+        levelExpUIText.text = string.Format("{0} / {1}", levelEXP.ToString(), LEVEL_INT[level].ToString());
+        levelExpFillHUD.fillAmount = levelEXP / LEVEL_INT[level];
 
         if (SimpleInput.GetButtonDown("OnIdle"))
         {

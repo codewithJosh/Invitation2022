@@ -11,6 +11,8 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int lastRoundStepUsed;
     [HideInInspector] public int unlockedSkins;
     [HideInInspector] public int unlockedMaps;
+    [HideInInspector] public int level;
+    [HideInInspector] public int levelEXP;
 
     public void NewPlayer(int[,,,] _mAP_INT)
     {
@@ -23,6 +25,8 @@ public class PlayerManager : MonoBehaviour
         lastRoundStepUsed = 0;
         unlockedSkins = 0;
         unlockedMaps = 0;
+        level = 1;
+        levelEXP = 0;
 
         SavePlayer();
 
@@ -48,6 +52,8 @@ public class PlayerManager : MonoBehaviour
         lastRoundStepUsed = playerManager.lastRoundStepUsed;
         unlockedSkins = playerManager.unlockedSkins;
         unlockedMaps = playerManager.unlockedMaps;
+        level = playerManager.level;
+        levelEXP = playerManager.levelEXP;
 
     }
 

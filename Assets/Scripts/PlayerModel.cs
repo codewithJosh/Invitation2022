@@ -10,6 +10,8 @@ public class PlayerModel
     public int lastRoundStepUsed;
     public int unlockedSkins;
     public int unlockedMaps;
+    public int level;
+    public int levelEXP;
 
     public PlayerModel(PlayerManager _playerManager)
     {
@@ -22,6 +24,8 @@ public class PlayerModel
         lastRoundStepUsed = _playerManager.lastRoundStepUsed;
         unlockedSkins = _playerManager.unlockedSkins;
         unlockedMaps = _playerManager.unlockedMaps;
+        level = _playerManager.level;
+        levelEXP = _playerManager.levelEXP;
 
     }
 
