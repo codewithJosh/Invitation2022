@@ -18,12 +18,13 @@ public class EndTrigger : MonoBehaviour
             FindObjectOfType<RoundManager>().OnStepState();
 
         }
-        else if (FindObjectOfType<RoundManager>().tag == "Finish")
+        if (tag == "Finish")
         {
 
-            Debug.Log("Done");
+
 
         }
+
 
     }
 

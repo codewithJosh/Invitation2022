@@ -7074,7 +7074,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-60326
+  m_Name: pb_Mesh-121722
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10286,6 +10286,8 @@ MonoBehaviour:
   lastRoundStepUsed: 0
   unlockedSkins: 0
   unlockedMaps: 0
+  level: 0
+  levelEXP: 0
 --- !u!114 &1944420983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12068,6 +12070,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1000337534, guid: 6869e8e0c68705046b4d3c52bc841d37, type: 3}
+      propertyPath: m_TagString
+      value: Finish
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000337536, guid: 6869e8e0c68705046b4d3c52bc841d37, type: 3}
+      propertyPath: m_Size.y
+      value: 2.936003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000337536, guid: 6869e8e0c68705046b4d3c52bc841d37, type: 3}
+      propertyPath: m_Center.y
+      value: -5.678472
+      objectReference: {fileID: 0}
     - target: {fileID: 5411982299520362336, guid: 6869e8e0c68705046b4d3c52bc841d37, type: 3}
       propertyPath: m_Mesh
       value: 
