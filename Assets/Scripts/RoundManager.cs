@@ -169,6 +169,14 @@ public class RoundManager : MonoBehaviour
 
         }
 
+        if (SimpleInput.GetButtonDown("OnStartMenu"))
+        {
+
+            PlayerPrefs.SetInt("index", 2);
+            SceneManager.LoadScene(1);
+
+        }
+
         if (gameState == GameStates.restart)
         {
 
