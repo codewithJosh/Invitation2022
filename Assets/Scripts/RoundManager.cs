@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 
 public class RoundManager : MonoBehaviour
@@ -11,8 +13,9 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goldDivisionUIText;
     [SerializeField] private TextMeshProUGUI silverDivisionUIText;
     [SerializeField] private TextMeshProUGUI bronzeDivisionUIText;
+    [SerializeField] private Toggle audioUIButton;
 
-    private enum GameStates { idle, pause};
+    private enum GameStates { idle, pause, restart};
     private GameStates gameState = GameStates.idle;
 
     private IEnumerator coroutine;
@@ -54,6 +57,8 @@ public class RoundManager : MonoBehaviour
 
     void Start()
     {
+
+        audioUIButton.isOn = true;
 
         initialCountdown = 3;
         coroutine = CountdownToStart();
@@ -156,6 +161,35 @@ public class RoundManager : MonoBehaviour
             StopCoroutine(coroutine);
 
         }
+
+        if (SimpleInput.GetButtonDown("OnRestart"))
+        {
+
+            gameState = GameStates.restart;
+
+        }
+
+        if (gameState == GameStates.restart)
+        {
+
+            if (SimpleInput.GetButtonDown("OnAffirmativeRestart"))
+            {
+
+                gameState = GameStates.pause;
+                PlayerPrefs.SetInt("index", lastMapUsed + 3);
+                SceneManager.LoadScene(1);
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnNegativeRestart"))
+            {
+
+                gameState = GameStates.pause;
+
+            }
+
+        }
+
 
         FindObjectOfType<GameManager>().GetAnimator.SetInteger("gameState", (int) gameState);
 

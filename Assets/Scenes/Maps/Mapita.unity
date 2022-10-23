@@ -7574,7 +7574,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -11761,6 +11761,7 @@ MonoBehaviour:
   goldDivisionUIText: {fileID: 1995499915}
   silverDivisionUIText: {fileID: 552696147}
   bronzeDivisionUIText: {fileID: 1497346}
+  audioUIButton: {fileID: 1115628198}
   respawnPoint: {x: 0, y: 0, z: 0}
   lastTag: 
 --- !u!43 &1946289811
