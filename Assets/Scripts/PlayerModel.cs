@@ -2,8 +2,8 @@
 public class PlayerModel
 {
 
-    public bool isMale;
-    public int[,,] MAP_INT; 
+    public int isMale;
+    public int[,,,] MAP_INT; 
     public int lastSkinUsed;
     public int lastMapUsed;
     public int lastDivisionUsed;

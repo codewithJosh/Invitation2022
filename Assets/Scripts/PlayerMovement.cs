@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpHeight = 3f;
     private float groundDistance = 0.4f;
 
-    private bool isMale;
+    private int isMale;
     private int lastSkinUsed;
 
     void Start()
@@ -35,11 +35,11 @@ public class PlayerMovement : MonoBehaviour
         isMale = FindObjectOfType<PlayerManager>().isMale;
         lastSkinUsed = FindObjectOfType<PlayerManager>().lastSkinUsed;
 
-        animator = isMale 
+        animator = isMale == 1
             ? maleSkins[lastSkinUsed].GetComponent<Animator>() 
             : femaleSkins[lastSkinUsed].GetComponent<Animator>();
 
-        if (isMale)
+        if (isMale == 1)
         {
 
             maleSkins[lastSkinUsed].SetActive(true);

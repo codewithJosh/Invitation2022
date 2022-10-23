@@ -44,12 +44,12 @@ public class StartMenu : MonoBehaviour
     private enum DivisionStates { idle, bronze, silver, gold};
     private DivisionStates divisionState = DivisionStates.idle;
 
-    private int[,,] MAP_INT;
+    private int[,,,] MAP_INT;
     private string[,,] SkinNames;
     private string[,] mapNames;
     private int[] MAP_ROUND_STEP_INT;
 
-    private bool isMale;
+    private int isMale;
     private int lastSkinUsed;
     private int lastMapUsed;
     private int lastDivisionUsed;
@@ -63,29 +63,39 @@ public class StartMenu : MonoBehaviour
         SkinNames = new string[5, 2, 2]
         {
 
-           { 
+           {
+
                 { "SHANNON", "" },
                 { "KATE", "" } 
+
            },
 
            { 
+
                 { "CRYPTO", "UNLOCK NEXT MAP" },
                 { "ARISSA", "UNLOCK NEXT MAP" } 
+
            },
 
            { 
+
                 { "N/A", "UNLOCK NEXT MAP" },
                 { "N/A", "UNLOCK NEXT MAP" } 
+
            },
 
            { 
+
                 { "N/A", "UNLOCK NEXT MAP" },
                 { "N/A", "UNLOCK NEXT MAP" } 
+
            },
 
            { 
+
                 { "N/A", "UNLOCK NEXT MAP" },
                 { "N/A", "UNLOCK NEXT MAP" } 
+
            }
 
         };
@@ -101,51 +111,106 @@ public class StartMenu : MonoBehaviour
 
         };
 
-        MAP_INT = new int[5, 3, 2]
+        MAP_INT = new int[2, 5, 3, 2]
         {
 
-            // MAPITA
-            {
-
-                { 0, 70 },
-                { 0, 65 },
-                { 0, 60 }
-
-            },
-
-            // LUNETA PARK
+            // FEMALE
             { 
 
-                { 0, 70 }, 
-                { 0, 65 }, 
-                { 0, 60 } 
+                // MAPITA
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // LUNETA PARK
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                } 
 
             },
 
-            // N/A
+            // MALE
             {
 
-                { 0, 70 },
-                { 0, 65 },
-                { 0, 60 }
+                // MAPITA
+                {
 
-            },
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
 
-            // N/A
-            {
+                },
 
-                { 0, 70 },
-                { 0, 65 },
-                { 0, 60 }
+                // LUNETA PARK
+                {
 
-            },
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
 
-            // N/A
-            {
+                },
 
-                { 0, 70 },
-                { 0, 65 },
-                { 0, 60 }
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                }
 
             }
 
@@ -226,14 +291,14 @@ public class StartMenu : MonoBehaviour
             if (SimpleInput.GetButtonDown("OnMale"))
             {
 
-                OnCharacterPicking(true);
+                OnCharacterPicking(1);
 
             }
 
             if (SimpleInput.GetButtonDown("OnFemale"))
             {
 
-                OnCharacterPicking(false);
+                OnCharacterPicking(0);
 
             }
 
@@ -246,9 +311,9 @@ public class StartMenu : MonoBehaviour
             FindObjectOfType<PlayerManager>().unlockedSkins = unlockedSkins;
             FindObjectOfType<PlayerManager>().unlockedMaps = unlockedMaps;
 
-            skinHUD.sprite = isMale ? maleSkins[lastSkinUsed] : femaleSkins[lastSkinUsed];
+            skinHUD.sprite = isMale == 1 ? maleSkins[lastSkinUsed] : femaleSkins[lastSkinUsed];
             mapHUD.sprite = maps[lastMapUsed];
-            skinUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 0] : SkinNames[lastSkinUsed, 1, 0];
+            skinUIText.text = isMale == 1 ? SkinNames[lastSkinUsed, 0, 0] : SkinNames[lastSkinUsed, 1, 0];
             mapUIText.text = mapNames[lastMapUsed, 0];
 
             if (lastSkinUsed <= unlockedSkins)
@@ -269,7 +334,7 @@ public class StartMenu : MonoBehaviour
                 skinsTitleHUD.sprite = resources[0];
                 skinUITextHUD.sprite = resources[4];
                 skinFrameHUD.sprite = resources[6];
-                skinLockedUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 1] : SkinNames[lastSkinUsed, 1, 1];
+                skinLockedUIText.text = isMale == 1 ? SkinNames[lastSkinUsed, 0, 1] : SkinNames[lastSkinUsed, 1, 1];
                 skinUIText.color = Color.black;
                 skinLockedHUD.SetActive(true);
                 skinForeground.SetActive(true);
@@ -279,9 +344,9 @@ public class StartMenu : MonoBehaviour
             if (lastMapUsed <= unlockedMaps)
             {
 
-                bronzeDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0] != 0 ? true : false);
-                silverDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0] != 0 ? true : false);
-                goldDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] != 0 ? true : false);
+                bronzeDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 0, 0] != 0 ? true : false);
+                silverDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 1, 0] != 0 ? true : false);
+                goldDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 2, 0] != 0 ? true : false);
                 mapsTitleHUD.sprite = resources[3];
                 mapUITextHUD.sprite = resources[5];
                 mapLockedUIText.text = "";
@@ -290,22 +355,22 @@ public class StartMenu : MonoBehaviour
                 mapForeground.SetActive(false);
                 finishWithinUIText.enabled = true;
                 mapCountdownUIText.enabled = true;
-                mapCountdownUIText.text = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, lastDivisionUsed, 1].ToString();
+                mapCountdownUIText.text = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, lastDivisionUsed, 1].ToString();
                 secondsUIText.enabled = true;
 
-                if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] != 0)
+                if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 2, 0] != 0)
                 {
 
                     mapFrameHUD.sprite = resources[10];
 
                 }
-                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0] != 0)
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 1, 0] != 0)
                 {
 
                     mapFrameHUD.sprite = resources[9];
 
                 }
-                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0] != 0)
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 0, 0] != 0)
                 {
 
                     mapFrameHUD.sprite = resources[8];
@@ -318,21 +383,21 @@ public class StartMenu : MonoBehaviour
 
                 }
 
-                if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0] == 0)
+                if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 0, 0] == 0)
                 {
 
                     lastDivisionUsed = 0;
                     OnAnimateFromSelectSection(DivisionStates.bronze);
 
                 }
-                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0] == 0)
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 1, 0] == 0)
                 {
 
                     lastDivisionUsed = 1;
                     OnAnimateFromSelectSection(DivisionStates.silver);
 
                 }
-                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] == 0)
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 2, 0] == 0)
                 {
 
                     lastDivisionUsed = 2;
@@ -467,11 +532,11 @@ public class StartMenu : MonoBehaviour
 
     }
 
-    private void OnCharacterPicking(bool _isMale)
+    private void OnCharacterPicking(int _isMale)
     {
 
         isMale = _isMale;
-        FindObjectOfType<GameManager>().OnAnimate(_isMale ? "male" : "female");
+        FindObjectOfType<GameManager>().OnAnimate(_isMale == 1 ? "male" : "female");
         int countdown = 1;
         StartCoroutine(SelectSectionToStart(countdown));
 

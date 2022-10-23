@@ -3,8 +3,8 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
 
-    [HideInInspector] public bool isMale;
-    [HideInInspector] public int[,,] MAP_INT;
+    [HideInInspector] public int isMale;
+    [HideInInspector] public int[,,,] MAP_INT;
     [HideInInspector] public int lastSkinUsed;
     [HideInInspector] public int lastMapUsed;
     [HideInInspector] public int lastDivisionUsed;
@@ -12,10 +12,10 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int unlockedSkins;
     [HideInInspector] public int unlockedMaps;
 
-    public void NewPlayer(int[,,] _mAP_INT)
+    public void NewPlayer(int[,,,] _mAP_INT)
     {
 
-        isMale = false;
+        isMale = 0;
         MAP_INT = _mAP_INT;
         lastSkinUsed = 0;
         lastMapUsed = 0;

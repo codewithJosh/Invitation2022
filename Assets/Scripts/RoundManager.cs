@@ -18,6 +18,7 @@ public class RoundManager : MonoBehaviour
     private int roundCountdown;
     private int lastRoundStep;
     private int roundStep;
+    private int isMale;
     private int lastMapUsed;
     private int lastDivisionUsed;
     private string tag;
@@ -55,14 +56,15 @@ public class RoundManager : MonoBehaviour
 
         FindObjectOfType<PlayerManager>().LoadPlayer();
 
+        isMale = FindObjectOfType<PlayerManager>().isMale;
         lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
         lastDivisionUsed = FindObjectOfType<PlayerManager>().lastDivisionUsed;
-        roundCountdown = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, lastDivisionUsed, 1];
+        roundCountdown = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, lastDivisionUsed, 1];
         roundStep = FindObjectOfType<PlayerManager>().lastRoundStepUsed;
 
-        int goldDivison = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0];
-        int silverDivision = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0];
-        int bronzeDivision = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0];
+        int goldDivison = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 2, 0];
+        int silverDivision = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 1, 0];
+        int bronzeDivision = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 0, 0];
 
         goldDivisionUIText.text = GetTime(goldDivison);
         silverDivisionUIText.text = GetTime(silverDivision);
