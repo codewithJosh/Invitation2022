@@ -12,6 +12,10 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI silverDivisionUIText;
     [SerializeField] private TextMeshProUGUI bronzeDivisionUIText;
 
+    private enum GameStates { idle, pause};
+    private GameStates gameState = GameStates.idle;
+
+    private IEnumerator coroutine;
     [HideInInspector] public Vector3 respawnPoint;
     private bool isDied;
     private int initialCountdown;
@@ -22,7 +26,6 @@ public class RoundManager : MonoBehaviour
     private int lastMapUsed;
     private int lastDivisionUsed;
     private string tag;
-    
 
     private void Awake()
     {
@@ -53,6 +56,7 @@ public class RoundManager : MonoBehaviour
     {
 
         initialCountdown = 3;
+        coroutine = TimeLeftToStart();
 
         FindObjectOfType<PlayerManager>().LoadPlayer();
 
@@ -69,8 +73,6 @@ public class RoundManager : MonoBehaviour
         goldDivisionUIText.text = GetTime(goldDivison);
         silverDivisionUIText.text = GetTime(silverDivision);
         bronzeDivisionUIText.text = GetTime(bronzeDivision);
-
-        
 
         StartCoroutine(CountdownToStart());
         OnStepState();
@@ -96,7 +98,7 @@ public class RoundManager : MonoBehaviour
         initialCountdownUIText.color = Color.red;
         initialCountdownUIText.text = "GO!";
         FindObjectOfType<PlayerMovement>().canMove = true;
-        StartCoroutine(TimeLeftToStart());
+        StartCoroutine(coroutine);
 
         yield return new WaitForSeconds(1f);
 
@@ -133,13 +135,28 @@ public class RoundManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-
     }
 
     void Update()
     {
 
+        if (SimpleInput.GetButtonDown("OnIdle"))
+        {
 
+            gameState = GameStates.idle;
+            StartCoroutine(coroutine);
+
+        }
+
+        if (SimpleInput.GetButtonDown("OnPause"))
+        {
+
+            gameState = GameStates.pause;
+            StopCoroutine(coroutine);
+
+        }
+
+        FindObjectOfType<GameManager>().GetAnimator.SetInteger("gameState", (int) gameState);
 
     }
 
