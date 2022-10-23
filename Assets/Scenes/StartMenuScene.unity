@@ -5241,6 +5241,8 @@ MonoBehaviour:
   lastRoundStepUsed: 0
   unlockedSkins: 0
   unlockedMaps: 0
+  level: 0
+  levelEXP: 0
 --- !u!1 &1113726872
 GameObject:
   m_ObjectHideFlags: 0
@@ -6697,7 +6699,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 290}
-  m_SizeDelta: {x: -1092, y: -694}
+  m_SizeDelta: {x: -1572, y: -694}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1519829206
 GameObject:
@@ -7587,7 +7589,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 290}
-  m_SizeDelta: {x: -1092, y: -694}
+  m_SizeDelta: {x: -1572, y: -694}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1708192214
 GameObject:
