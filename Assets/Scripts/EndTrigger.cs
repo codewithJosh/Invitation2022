@@ -13,7 +13,7 @@ public class EndTrigger : MonoBehaviour
 
             Vector3 position = gameObject.transform.position;
 
-            FindObjectOfType<RoundManager>().respawnPoint = new Vector3(position.x + getXRandomPosition(), position.y + 3f, position.z);
+            FindObjectOfType<RoundManager>().respawnPoint = new Vector3(position.x + getXRandomPosition(), position.y, position.z);
             FindObjectOfType<RoundManager>().tag = tag;
             FindObjectOfType<RoundManager>().OnStepState();
 

@@ -15,6 +15,8 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private GameObject bronzeDivisionCheckHUD;
     [SerializeField] private GameObject silverDivisionCheckHUD;
     [SerializeField] private GameObject goldDivisionCheckHUD;
+    [SerializeField] private GameObject skinForeground;
+    [SerializeField] private GameObject mapForeground;
     [SerializeField] private Image skinHUD;
     [SerializeField] private Image skinFrameHUD;
     [SerializeField] private Image skinsTitleHUD;
@@ -34,6 +36,8 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI finishWithinUIText;
     [SerializeField] private TextMeshProUGUI secondsUIText;
     [SerializeField] private TextMeshProUGUI mapCountdownUIText;
+    [SerializeField] private TextMeshProUGUI skinLockedUIText;
+    [SerializeField] private TextMeshProUGUI mapLockedUIText;
 
     private enum StartMenuStates { idle, start, help, about, quit, select};
     private StartMenuStates startMenuState = StartMenuStates.idle;
@@ -70,18 +74,18 @@ public class StartMenu : MonoBehaviour
            },
 
            { 
-                { "N/A", "N/A" },
-                { "N/A", "N/A" } 
+                { "N/A", "UNLOCK NEXT MAP" },
+                { "N/A", "UNLOCK NEXT MAP" } 
            },
 
            { 
-                { "N/A", "N/A" },
-                { "N/A", "N/A" } 
+                { "N/A", "UNLOCK NEXT MAP" },
+                { "N/A", "UNLOCK NEXT MAP" } 
            },
 
            { 
-                { "N/A", "N/A" },
-                { "N/A", "N/A" } 
+                { "N/A", "UNLOCK NEXT MAP" },
+                { "N/A", "UNLOCK NEXT MAP" } 
            }
 
         };
@@ -90,10 +94,10 @@ public class StartMenu : MonoBehaviour
         {
 
             { "MAPITA", "" },
-            { "LUNETA PARK", "N/A" },
-            { "N/A", "N/A" },
-            { "N/A", "N/A" },
-            { "N/A", "N/A" }
+            { "LUNETA PARK", "UNLOCK 1 GOLD MAP" },
+            { "MARAWI", "UNLOCK 2 GOLD MAP" },
+            { "CORON", "UNLOCK 3 GOLD MAP" },
+            { "SAN JUANICO", "UNLOCK 4 GOLD MAP" }
 
         };
 
@@ -244,6 +248,8 @@ public class StartMenu : MonoBehaviour
 
             skinHUD.sprite = isMale ? maleSkins[lastSkinUsed] : femaleSkins[lastSkinUsed];
             mapHUD.sprite = maps[lastMapUsed];
+            skinUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 0] : SkinNames[lastSkinUsed, 1, 0];
+            mapUIText.text = mapNames[lastMapUsed, 0];
 
             if (lastSkinUsed <= unlockedSkins)
             {
@@ -251,9 +257,9 @@ public class StartMenu : MonoBehaviour
                 skinsTitleHUD.sprite = resources[1];
                 skinUITextHUD.sprite = resources[5];
                 skinFrameHUD.sprite = resources[7];
-                skinUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 0] : SkinNames[lastSkinUsed, 1, 0];
                 skinUIText.color = Color.white;
                 skinLockedHUD.SetActive(false);
+                skinForeground.SetActive(false);
 
             }
             else
@@ -262,9 +268,10 @@ public class StartMenu : MonoBehaviour
                 skinsTitleHUD.sprite = resources[0];
                 skinUITextHUD.sprite = resources[4];
                 skinFrameHUD.sprite = resources[6];
-                skinUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 1] : SkinNames[lastSkinUsed, 1, 1];
+                skinLockedUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 1] : SkinNames[lastSkinUsed, 1, 1];
                 skinUIText.color = Color.black;
                 skinLockedHUD.SetActive(true);
+                skinForeground.SetActive(true);
 
             }
 
@@ -276,9 +283,9 @@ public class StartMenu : MonoBehaviour
                 goldDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] != 0 ? true : false);
                 mapsTitleHUD.sprite = resources[3];
                 mapUITextHUD.sprite = resources[5];
-                mapUIText.text = mapNames[lastMapUsed, 0];
                 mapUIText.color = Color.white;
                 mapLockedHUD.SetActive(false);
+                mapForeground.SetActive(false);
                 finishWithinUIText.enabled = true;
                 mapCountdownUIText.enabled = true;
                 mapCountdownUIText.text = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, lastDivisionUsed, 1].ToString();
@@ -352,9 +359,10 @@ public class StartMenu : MonoBehaviour
                 mapsTitleHUD.sprite = resources[2];
                 mapUITextHUD.sprite = resources[4];
                 mapFrameHUD.sprite = resources[6];
-                mapUIText.text = mapNames[lastMapUsed, 1];
+                mapLockedUIText.text = mapNames[lastMapUsed, 1];
                 mapUIText.color = Color.black;
                 mapLockedHUD.SetActive(true);
+                mapForeground.SetActive(true);
 
             }
 
