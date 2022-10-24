@@ -55,6 +55,8 @@ public class StartMenu : MonoBehaviour
     private string[,] mapNames;
     private int[] MAP_ROUND_STEP_INT;
 
+    private float levelEXP;
+    private float nextLevelEXP;
     private int isMale;
     private int lastSkinUsed;
     private int lastMapUsed;
@@ -63,7 +65,6 @@ public class StartMenu : MonoBehaviour
     private int unlockedSkins;
     private int unlockedMaps;
     private int level;
-    private int levelEXP;
 
     void Start()
     {
@@ -274,15 +275,17 @@ public class StartMenu : MonoBehaviour
         unlockedMaps = FindObjectOfType<PlayerManager>().unlockedMaps;
         level = FindObjectOfType<PlayerManager>().level;
         levelEXP = FindObjectOfType<PlayerManager>().levelEXP;
+        nextLevelEXP = FindObjectOfType<PlayerManager>().nextLevelEXP;
 
     }
 
     void Update()
     {
 
+        nextLevelEXP = LEVEL_INT[level];
         levelUIText.text = level.ToString();
-        levelExpUIText.text = string.Format("{0} / {1}", levelEXP.ToString(), LEVEL_INT[level].ToString());
-        levelExpFillHUD.fillAmount = levelEXP / LEVEL_INT[level];
+        levelExpUIText.text = string.Format("{0} / {1}", levelEXP.ToString(), nextLevelEXP.ToString());
+        levelExpFillHUD.fillAmount = levelEXP / nextLevelEXP;
 
         if (SimpleInput.GetButtonDown("OnIdle"))
         {
@@ -679,6 +682,7 @@ public class StartMenu : MonoBehaviour
         FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
         FindObjectOfType<PlayerManager>().lastDivisionUsed = lastDivisionUsed;
         FindObjectOfType<PlayerManager>().lastRoundStepUsed = lastRoundStepUsed;
+        FindObjectOfType<PlayerManager>().nextLevelEXP = nextLevelEXP;
         FindObjectOfType<PlayerManager>().SavePlayer();
 
         PlayerPrefs.SetInt("index", lastMapUsed + 3);

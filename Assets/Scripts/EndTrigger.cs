@@ -8,7 +8,7 @@ public class EndTrigger : MonoBehaviour
 
         string tag = gameObject.tag;
 
-        if (FindObjectOfType<RoundManager>().lastTag != tag)
+        if (FindObjectOfType<RoundManager>().lastTag != tag && tag != "Finish")
         {
 
             Vector3 position = gameObject.transform.position;
@@ -22,7 +22,7 @@ public class EndTrigger : MonoBehaviour
         if (tag == "Finish")
         {
 
-
+            FindObjectOfType<RoundManager>().OnMissionSuccess();
 
         }
 

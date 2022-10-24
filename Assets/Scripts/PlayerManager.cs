@@ -12,7 +12,8 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int unlockedSkins;
     [HideInInspector] public int unlockedMaps;
     [HideInInspector] public int level;
-    [HideInInspector] public int levelEXP;
+    [HideInInspector] public float levelEXP;
+    [HideInInspector] public float nextLevelEXP;
 
     public void NewPlayer(int[,,,] _mAP_INT)
     {
@@ -26,7 +27,8 @@ public class PlayerManager : MonoBehaviour
         unlockedSkins = 0;
         unlockedMaps = 0;
         level = 1;
-        levelEXP = 0;
+        levelEXP = 0f;
+        nextLevelEXP = 0f;
 
         SavePlayer();
 
@@ -54,6 +56,7 @@ public class PlayerManager : MonoBehaviour
         unlockedMaps = playerManager.unlockedMaps;
         level = playerManager.level;
         levelEXP = playerManager.levelEXP;
+        nextLevelEXP = playerManager.nextLevelEXP;
 
     }
 

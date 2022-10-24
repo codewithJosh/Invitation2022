@@ -7,20 +7,31 @@ using TMPro;
 public class RoundManager : MonoBehaviour
 {
 
+    [SerializeField] private Image resultHUD;
+    [SerializeField] private Image levelExpFillHUD;
+    [SerializeField] private Sprite[] resources;
     [SerializeField] private TextMeshProUGUI initialCountdownUIText;
     [SerializeField] private TextMeshProUGUI roundCountdownUIText;
     [SerializeField] private TextMeshProUGUI roundStepUIText;
     [SerializeField] private TextMeshProUGUI goldDivisionUIText;
     [SerializeField] private TextMeshProUGUI silverDivisionUIText;
     [SerializeField] private TextMeshProUGUI bronzeDivisionUIText;
+    [SerializeField] private TextMeshProUGUI resultUIText;
+    [SerializeField] private TextMeshProUGUI resultCountdownUIText;
+    [SerializeField] private TextMeshProUGUI levelExpUIText;
+    [SerializeField] private TextMeshProUGUI levelExpUpUIText;
+    [SerializeField] private TextMeshProUGUI levelUIText;
     [SerializeField] private Toggle audioUIButton;
 
-    private enum GameStates { idle, pause, restart, startMenu};
-    private GameStates gameState = GameStates.idle;
+    [HideInInspector] public enum GameStates { idle, pause, restart, startMenu, result};
+    [HideInInspector] public GameStates gameState = GameStates.idle;
 
     private IEnumerator coroutine;
     [HideInInspector] public Vector3 respawnPoint;
+
     private bool isDied;
+    private float levelEXP;
+    private float nextLevelEXP;
     private int initialCountdown;
     private int roundCountdown;
     private int lastRoundStep;
@@ -28,6 +39,7 @@ public class RoundManager : MonoBehaviour
     private int isMale;
     private int lastMapUsed;
     private int lastDivisionUsed;
+    private int level;
     [HideInInspector] public string lastTag;
 
     private void Awake()
@@ -70,6 +82,9 @@ public class RoundManager : MonoBehaviour
         lastDivisionUsed = FindObjectOfType<PlayerManager>().lastDivisionUsed;
         roundCountdown = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, lastDivisionUsed, 1];
         roundStep = FindObjectOfType<PlayerManager>().lastRoundStepUsed;
+        level = FindObjectOfType<PlayerManager>().level;
+        levelEXP = FindObjectOfType<PlayerManager>().levelEXP;
+        nextLevelEXP = FindObjectOfType<PlayerManager>().nextLevelEXP;
 
         int goldDivison = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 2, 0];
         int silverDivision = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 1, 0];
@@ -138,6 +153,7 @@ public class RoundManager : MonoBehaviour
 
         FindObjectOfType<PlayerMovement>().canMove = false;
         FindObjectOfType<PlayerMovement>().isDying = true;
+        OnMissionFailed();
 
         yield return new WaitForSeconds(1f);
 
@@ -277,6 +293,87 @@ public class RoundManager : MonoBehaviour
         isDied = false;
         FindObjectOfType<PlayerMovement>().isDied = false;
         transform.position = respawnPoint;
+
+    }
+
+    private void OnMissionFailed()
+    {
+
+        gameState = GameStates.result;
+        resultHUD.sprite = resources[0];
+        resultUIText.text = "TIME TO BEAT";
+        resultUIText.color = Color.red;
+        resultCountdownUIText.text = GetTime(FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, lastDivisionUsed, 1]);
+        resultCountdownUIText.color = Color.red;
+        int countdown = 2;
+        StartCoroutine(OnLevelExpUpToStart(countdown, false));
+
+    }
+
+    public void OnMissionSuccess()
+    {
+
+        StopCoroutine(coroutine);
+        gameState = GameStates.result;
+        resultHUD.sprite = resources[1];
+        resultUIText.text = "NEW RECORD";
+        resultUIText.color = Color.green;
+        resultCountdownUIText.text = roundCountdownUIText.text;
+        resultCountdownUIText.color = Color.green;
+        int countdown = 2;
+        StartCoroutine(OnLevelExpUpToStart(countdown, true));
+
+        
+
+    }
+
+    IEnumerator OnLevelExpUpToStart(int _countdown, bool isSuccess)
+    {
+
+        levelUIText.text = string.Format("LEVEL\n{0}", level);
+        levelExpUIText.text = string.Format("{0} / {1}", levelEXP.ToString(), nextLevelEXP.ToString());
+        levelExpFillHUD.fillAmount = levelEXP / nextLevelEXP;
+
+        if (levelEXP + GetDivisionEXP(lastDivisionUsed) > nextLevelEXP)
+        {
+
+            level++;
+
+        }
+
+        while (_countdown > 0)
+        {
+
+            yield return new WaitForSeconds(1f);
+
+            _countdown--;
+
+        }
+
+        levelEXP += isSuccess
+                ? GetDivisionEXP(lastDivisionUsed)
+                : 750;
+        
+        levelUIText.text = string.Format("LEVEL\n{0}", level);
+        levelExpUIText.text = string.Format("{0} / {1}", levelEXP.ToString(), nextLevelEXP.ToString());
+        levelExpFillHUD.fillAmount = levelEXP / nextLevelEXP;
+        levelExpUpUIText.text = string.Format("+{0}", levelEXP);
+
+    }
+
+    private int GetDivisionEXP(int _division)
+    {
+
+        return _division switch
+        {
+
+            1 => 300,
+
+            2 => 500,
+
+            _ => 150,
+
+        };
 
     }
 

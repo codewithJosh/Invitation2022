@@ -2,6 +2,8 @@
 public class PlayerModel
 {
 
+    public float levelEXP;
+    public float nextLevelEXP;
     public int isMale;
     public int[,,,] MAP_INT; 
     public int lastSkinUsed;
@@ -11,11 +13,12 @@ public class PlayerModel
     public int unlockedSkins;
     public int unlockedMaps;
     public int level;
-    public int levelEXP;
 
     public PlayerModel(PlayerManager _playerManager)
     {
 
+        levelEXP = _playerManager.levelEXP;
+        nextLevelEXP = _playerManager.nextLevelEXP;
         isMale = _playerManager.isMale;
         MAP_INT = _playerManager.MAP_INT;
         lastSkinUsed = _playerManager.lastSkinUsed;
@@ -25,7 +28,6 @@ public class PlayerModel
         unlockedSkins = _playerManager.unlockedSkins;
         unlockedMaps = _playerManager.unlockedMaps;
         level = _playerManager.level;
-        levelEXP = _playerManager.levelEXP;
 
     }
 
