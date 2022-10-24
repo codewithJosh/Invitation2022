@@ -17,6 +17,8 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private GameObject goldDivisionCheckHUD;
     [SerializeField] private GameObject skinForeground;
     [SerializeField] private GameObject mapForeground;
+    [SerializeField] private GameObject skinUnknownHUD;
+    [SerializeField] private GameObject mapUnknownHUD;
     [SerializeField] private Image skinHUD;
     [SerializeField] private Image skinFrameHUD;
     [SerializeField] private Image skinsTitleHUD;
@@ -26,6 +28,7 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private Image mapsTitleHUD;
     [SerializeField] private Image mapUITextHUD;
     [SerializeField] private Image aboutBackground;
+    [SerializeField] private Image levelExpFillHUD;
     [SerializeField] private Sprite[] resources;
     [SerializeField] private Sprite[] maleSkins;
     [SerializeField] private Sprite[] femaleSkins;
@@ -38,24 +41,30 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI mapCountdownUIText;
     [SerializeField] private TextMeshProUGUI skinLockedUIText;
     [SerializeField] private TextMeshProUGUI mapLockedUIText;
+    [SerializeField] private TextMeshProUGUI levelUIText;
+    [SerializeField] private TextMeshProUGUI levelExpUIText;
 
     private enum StartMenuStates { idle, start, help, about, quit, select};
     private StartMenuStates startMenuState = StartMenuStates.idle;
     private enum DivisionStates { idle, bronze, silver, gold};
     private DivisionStates divisionState = DivisionStates.idle;
 
-    private int[,,] MAP_INT;
+    private int[,,,] MAP_INT;
+    private int[] LEVEL_INT;
     private string[,,] SkinNames;
     private string[,] mapNames;
     private int[] MAP_ROUND_STEP_INT;
 
-    private bool isMale;
+    private float levelEXP;
+    private float nextLevelEXP;
+    private int isMale;
     private int lastSkinUsed;
     private int lastMapUsed;
     private int lastDivisionUsed;
     private int lastRoundStepUsed;
     private int unlockedSkins;
     private int unlockedMaps;
+    private int level;
 
     void Start()
     {
@@ -63,29 +72,39 @@ public class StartMenu : MonoBehaviour
         SkinNames = new string[5, 2, 2]
         {
 
-           { 
+           {
+
                 { "SHANNON", "" },
                 { "KATE", "" } 
+
            },
 
            { 
-                { "CRYPTO", "UNLOCK NEXT MAP" },
-                { "ARISSA", "UNLOCK NEXT MAP" } 
+
+                { "CRYPTO", "UNLOCK AT LEVEL 2" },
+                { "ARISSA", "UNLOCK AT LEVEL 3" } 
+
            },
 
            { 
-                { "N/A", "UNLOCK NEXT MAP" },
-                { "N/A", "UNLOCK NEXT MAP" } 
+
+                { "N/A", "UNLOCK AT LEVEL 4" },
+                { "N/A", "UNLOCK AT LEVEL 5" } 
+
            },
 
            { 
-                { "N/A", "UNLOCK NEXT MAP" },
-                { "N/A", "UNLOCK NEXT MAP" } 
+
+                { "N/A", "UNLOCK AT LEVEL 6" },
+                { "N/A", "UNLOCK AT LEVEL 7" } 
+
            },
 
            { 
-                { "N/A", "UNLOCK NEXT MAP" },
-                { "N/A", "UNLOCK NEXT MAP" } 
+
+                { "N/A", "UNLOCK AT LEVEL 8" },
+                { "N/A", "UNLOCK AT LEVEL 9" } 
+
            }
 
         };
@@ -96,56 +115,111 @@ public class StartMenu : MonoBehaviour
             { "MAPITA", "" },
             { "LUNETA PARK", "UNLOCK 1 GOLD MAP" },
             { "MARAWI", "UNLOCK 2 GOLD MAP" },
-            { "CORON", "UNLOCK 3 GOLD MAP" },
-            { "SAN JUANICO", "UNLOCK 4 GOLD MAP" }
+            { "CORON", "UNLOCK 4 GOLD MAP" },
+            { "SAN JUANICO", "UNLOCK 8 GOLD MAP" }
 
         };
 
-        MAP_INT = new int[5, 3, 2]
+        MAP_INT = new int[2, 5, 3, 2]
         {
 
-            // MAPITA
-            {
-
-                { 0, 70 },
-                { 0, 65 },
-                { 0, 60 }
-
-            },
-
-            // LUNETA PARK
+            // FEMALE
             { 
 
-                { 0, 70 }, 
-                { 0, 65 }, 
-                { 0, 60 } 
+                // MAPITA
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // LUNETA PARK
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                } 
 
             },
 
-            // N/A
+            // MALE
             {
 
-                { 0, 70 },
-                { 0, 65 },
-                { 0, 60 }
+                // MAPITA
+                {
 
-            },
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
 
-            // N/A
-            {
+                },
 
-                { 0, 70 },
-                { 0, 65 },
-                { 0, 60 }
+                // LUNETA PARK
+                {
 
-            },
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
 
-            // N/A
-            {
+                },
 
-                { 0, 70 },
-                { 0, 65 },
-                { 0, 60 }
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                },
+
+                // N/A
+                {
+
+                    { 0, 70 },
+                    { 0, 65 },
+                    { 0, 60 }
+
+                }
 
             }
 
@@ -159,6 +233,27 @@ public class StartMenu : MonoBehaviour
             4,
             4,
             4,
+
+        };
+
+        LEVEL_INT = new int[]
+        {
+
+            0,
+            1500,
+            3000,
+            4500,
+            6000,
+            7500,
+            9000,
+            10500,
+            12000,
+            13500,
+            15000,
+            16500,
+            18000,
+            19500,
+            21000
 
         };
 
@@ -178,11 +273,19 @@ public class StartMenu : MonoBehaviour
         lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
         unlockedSkins = FindObjectOfType<PlayerManager>().unlockedSkins;
         unlockedMaps = FindObjectOfType<PlayerManager>().unlockedMaps;
+        level = FindObjectOfType<PlayerManager>().level;
+        levelEXP = FindObjectOfType<PlayerManager>().levelEXP;
+        nextLevelEXP = FindObjectOfType<PlayerManager>().nextLevelEXP;
 
     }
 
     void Update()
     {
+
+        nextLevelEXP = LEVEL_INT[level];
+        levelUIText.text = level.ToString();
+        levelExpUIText.text = string.Format("{0} / {1}", levelEXP.ToString(), nextLevelEXP.ToString());
+        levelExpFillHUD.fillAmount = levelEXP / nextLevelEXP;
 
         if (SimpleInput.GetButtonDown("OnIdle"))
         {
@@ -226,14 +329,14 @@ public class StartMenu : MonoBehaviour
             if (SimpleInput.GetButtonDown("OnMale"))
             {
 
-                OnCharacterPicking(true);
+                OnCharacterPicking(1);
 
             }
 
             if (SimpleInput.GetButtonDown("OnFemale"))
             {
 
-                OnCharacterPicking(false);
+                OnCharacterPicking(0);
 
             }
 
@@ -246,9 +349,9 @@ public class StartMenu : MonoBehaviour
             FindObjectOfType<PlayerManager>().unlockedSkins = unlockedSkins;
             FindObjectOfType<PlayerManager>().unlockedMaps = unlockedMaps;
 
-            skinHUD.sprite = isMale ? maleSkins[lastSkinUsed] : femaleSkins[lastSkinUsed];
+            skinHUD.sprite = isMale == 1 ? maleSkins[lastSkinUsed] : femaleSkins[lastSkinUsed];
             mapHUD.sprite = maps[lastMapUsed];
-            skinUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 0] : SkinNames[lastSkinUsed, 1, 0];
+            skinUIText.text = isMale == 1 ? SkinNames[lastSkinUsed, 0, 0] : SkinNames[lastSkinUsed, 1, 0];
             mapUIText.text = mapNames[lastMapUsed, 0];
 
             if (lastSkinUsed <= unlockedSkins)
@@ -257,9 +360,11 @@ public class StartMenu : MonoBehaviour
                 skinsTitleHUD.sprite = resources[1];
                 skinUITextHUD.sprite = resources[5];
                 skinFrameHUD.sprite = resources[7];
+                skinLockedUIText.text = "";
                 skinUIText.color = Color.white;
                 skinLockedHUD.SetActive(false);
                 skinForeground.SetActive(false);
+                skinUnknownHUD.SetActive(false);
 
             }
             else
@@ -268,42 +373,45 @@ public class StartMenu : MonoBehaviour
                 skinsTitleHUD.sprite = resources[0];
                 skinUITextHUD.sprite = resources[4];
                 skinFrameHUD.sprite = resources[6];
-                skinLockedUIText.text = isMale ? SkinNames[lastSkinUsed, 0, 1] : SkinNames[lastSkinUsed, 1, 1];
+                skinLockedUIText.text = isMale == 1 ? SkinNames[lastSkinUsed, 0, 1] : SkinNames[lastSkinUsed, 1, 1];
                 skinUIText.color = Color.black;
                 skinLockedHUD.SetActive(true);
                 skinForeground.SetActive(true);
+                skinUnknownHUD.SetActive(true);
 
             }
 
             if (lastMapUsed <= unlockedMaps)
             {
 
-                bronzeDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0] != 0 ? true : false);
-                silverDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0] != 0 ? true : false);
-                goldDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] != 0 ? true : false);
+                bronzeDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 0, 0] != 0 ? true : false);
+                silverDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 1, 0] != 0 ? true : false);
+                goldDivisionCheckHUD.SetActive(FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 2, 0] != 0 ? true : false);
                 mapsTitleHUD.sprite = resources[3];
                 mapUITextHUD.sprite = resources[5];
+                mapLockedUIText.text = "";
                 mapUIText.color = Color.white;
                 mapLockedHUD.SetActive(false);
                 mapForeground.SetActive(false);
+                mapUnknownHUD.SetActive(false);
                 finishWithinUIText.enabled = true;
                 mapCountdownUIText.enabled = true;
-                mapCountdownUIText.text = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, lastDivisionUsed, 1].ToString();
+                mapCountdownUIText.text = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, lastDivisionUsed, 1].ToString();
                 secondsUIText.enabled = true;
 
-                if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] != 0)
+                if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 2, 0] != 0)
                 {
 
                     mapFrameHUD.sprite = resources[10];
 
                 }
-                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0] != 0)
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 1, 0] != 0)
                 {
 
                     mapFrameHUD.sprite = resources[9];
 
                 }
-                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0] != 0)
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 0, 0] != 0)
                 {
 
                     mapFrameHUD.sprite = resources[8];
@@ -316,21 +424,21 @@ public class StartMenu : MonoBehaviour
 
                 }
 
-                if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0] == 0)
+                if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 0, 0] == 0)
                 {
 
                     lastDivisionUsed = 0;
                     OnAnimateFromSelectSection(DivisionStates.bronze);
 
                 }
-                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0] == 0)
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 1, 0] == 0)
                 {
 
                     lastDivisionUsed = 1;
                     OnAnimateFromSelectSection(DivisionStates.silver);
 
                 }
-                else if (FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0] == 0)
+                else if (FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 2, 0] == 0)
                 {
 
                     lastDivisionUsed = 2;
@@ -363,6 +471,7 @@ public class StartMenu : MonoBehaviour
                 mapUIText.color = Color.black;
                 mapLockedHUD.SetActive(true);
                 mapForeground.SetActive(true);
+                mapUnknownHUD.SetActive(true);
 
             }
 
@@ -465,11 +574,11 @@ public class StartMenu : MonoBehaviour
 
     }
 
-    private void OnCharacterPicking(bool _isMale)
+    private void OnCharacterPicking(int _isMale)
     {
 
         isMale = _isMale;
-        FindObjectOfType<GameManager>().OnAnimate(_isMale ? "male" : "female");
+        FindObjectOfType<GameManager>().OnAnimate(_isMale == 1 ? "male" : "female");
         int countdown = 1;
         StartCoroutine(SelectSectionToStart(countdown));
 
@@ -573,6 +682,7 @@ public class StartMenu : MonoBehaviour
         FindObjectOfType<PlayerManager>().lastMapUsed = lastMapUsed;
         FindObjectOfType<PlayerManager>().lastDivisionUsed = lastDivisionUsed;
         FindObjectOfType<PlayerManager>().lastRoundStepUsed = lastRoundStepUsed;
+        FindObjectOfType<PlayerManager>().nextLevelEXP = nextLevelEXP;
         FindObjectOfType<PlayerManager>().SavePlayer();
 
         PlayerPrefs.SetInt("index", lastMapUsed + 3);

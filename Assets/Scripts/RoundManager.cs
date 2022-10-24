@@ -1,27 +1,46 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 
 public class RoundManager : MonoBehaviour
 {
 
+    [SerializeField] private Image resultHUD;
+    [SerializeField] private Image levelExpFillHUD;
+    [SerializeField] private Sprite[] resources;
     [SerializeField] private TextMeshProUGUI initialCountdownUIText;
     [SerializeField] private TextMeshProUGUI roundCountdownUIText;
     [SerializeField] private TextMeshProUGUI roundStepUIText;
     [SerializeField] private TextMeshProUGUI goldDivisionUIText;
     [SerializeField] private TextMeshProUGUI silverDivisionUIText;
     [SerializeField] private TextMeshProUGUI bronzeDivisionUIText;
+    [SerializeField] private TextMeshProUGUI resultUIText;
+    [SerializeField] private TextMeshProUGUI resultCountdownUIText;
+    [SerializeField] private TextMeshProUGUI levelExpUIText;
+    [SerializeField] private TextMeshProUGUI levelExpUpUIText;
+    [SerializeField] private TextMeshProUGUI levelUIText;
+    [SerializeField] private Toggle audioUIButton;
 
+    [HideInInspector] public enum GameStates { idle, pause, restart, startMenu, result};
+    [HideInInspector] public GameStates gameState = GameStates.idle;
+
+    private IEnumerator coroutine;
     [HideInInspector] public Vector3 respawnPoint;
+
     private bool isDied;
+    private float levelEXP;
+    private float nextLevelEXP;
     private int initialCountdown;
     private int roundCountdown;
     private int lastRoundStep;
     private int roundStep;
+    private int isMale;
     private int lastMapUsed;
     private int lastDivisionUsed;
-    private string tag;
-    
+    private int level;
+    [HideInInspector] public string lastTag;
 
     private void Awake()
     {
@@ -51,26 +70,31 @@ public class RoundManager : MonoBehaviour
     void Start()
     {
 
+        audioUIButton.isOn = true;
+
         initialCountdown = 3;
+        coroutine = CountdownToStart();
 
         FindObjectOfType<PlayerManager>().LoadPlayer();
 
+        isMale = FindObjectOfType<PlayerManager>().isMale;
         lastMapUsed = FindObjectOfType<PlayerManager>().lastMapUsed;
         lastDivisionUsed = FindObjectOfType<PlayerManager>().lastDivisionUsed;
-        roundCountdown = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, lastDivisionUsed, 1];
+        roundCountdown = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, lastDivisionUsed, 1];
         roundStep = FindObjectOfType<PlayerManager>().lastRoundStepUsed;
+        level = FindObjectOfType<PlayerManager>().level;
+        levelEXP = FindObjectOfType<PlayerManager>().levelEXP;
+        nextLevelEXP = FindObjectOfType<PlayerManager>().nextLevelEXP;
 
-        int goldDivison = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 2, 0];
-        int silverDivision = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 1, 0];
-        int bronzeDivision = FindObjectOfType<PlayerManager>().MAP_INT[lastMapUsed, 0, 0];
+        int goldDivison = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 2, 0];
+        int silverDivision = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 1, 0];
+        int bronzeDivision = FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, 0, 0];
 
         goldDivisionUIText.text = GetTime(goldDivison);
         silverDivisionUIText.text = GetTime(silverDivision);
         bronzeDivisionUIText.text = GetTime(bronzeDivision);
 
-        
-
-        StartCoroutine(CountdownToStart());
+        StartCoroutine(coroutine);
         OnStepState();
 
     }
@@ -94,7 +118,8 @@ public class RoundManager : MonoBehaviour
         initialCountdownUIText.color = Color.red;
         initialCountdownUIText.text = "GO!";
         FindObjectOfType<PlayerMovement>().canMove = true;
-        StartCoroutine(TimeLeftToStart());
+        coroutine = TimeLeftToStart();
+        StartCoroutine(coroutine);
 
         yield return new WaitForSeconds(1f);
 
@@ -128,16 +153,89 @@ public class RoundManager : MonoBehaviour
 
         FindObjectOfType<PlayerMovement>().canMove = false;
         FindObjectOfType<PlayerMovement>().isDying = true;
+        OnMissionFailed();
 
         yield return new WaitForSeconds(1f);
-
 
     }
 
     void Update()
     {
 
+        if (SimpleInput.GetButtonDown("OnIdle"))
+        {
 
+            gameState = GameStates.idle;
+            StartCoroutine(coroutine);
+
+        }
+
+        if (SimpleInput.GetButtonDown("OnPause"))
+        {
+
+            gameState = GameStates.pause;
+            StopCoroutine(coroutine);
+
+        }
+
+        if (SimpleInput.GetButtonDown("OnRestart"))
+        {
+
+            gameState = GameStates.restart;
+
+        }
+
+        if (SimpleInput.GetButtonDown("OnStartMenu"))
+        {
+
+            gameState = GameStates.startMenu;
+
+        }
+
+        if (gameState == GameStates.restart)
+        {
+
+            if (SimpleInput.GetButtonDown("OnAffirmativeRestart"))
+            {
+
+                gameState = GameStates.pause;
+                PlayerPrefs.SetInt("index", lastMapUsed + 3);
+                SceneManager.LoadScene(1);
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnNegativeRestart"))
+            {
+
+                gameState = GameStates.pause;
+
+            }
+
+        }
+
+        if (gameState == GameStates.startMenu)
+        {
+
+            if (SimpleInput.GetButtonDown("OnAffirmativeStartMenu"))
+            {
+
+                gameState = GameStates.pause;
+                PlayerPrefs.SetInt("index", 2);
+                SceneManager.LoadScene(1);
+
+            }
+
+            if (SimpleInput.GetButtonDown("OnNegativeStartMenu"))
+            {
+
+                gameState = GameStates.pause;
+
+            }
+
+        }
+
+
+        FindObjectOfType<GameManager>().GetAnimator.SetInteger("gameState", (int) gameState);
 
     }
 
@@ -195,6 +293,87 @@ public class RoundManager : MonoBehaviour
         isDied = false;
         FindObjectOfType<PlayerMovement>().isDied = false;
         transform.position = respawnPoint;
+
+    }
+
+    private void OnMissionFailed()
+    {
+
+        gameState = GameStates.result;
+        resultHUD.sprite = resources[0];
+        resultUIText.text = "TIME TO BEAT";
+        resultUIText.color = Color.red;
+        resultCountdownUIText.text = GetTime(FindObjectOfType<PlayerManager>().MAP_INT[isMale, lastMapUsed, lastDivisionUsed, 1]);
+        resultCountdownUIText.color = Color.red;
+        int countdown = 2;
+        StartCoroutine(OnLevelExpUpToStart(countdown, false));
+
+    }
+
+    public void OnMissionSuccess()
+    {
+
+        StopCoroutine(coroutine);
+        gameState = GameStates.result;
+        resultHUD.sprite = resources[1];
+        resultUIText.text = "NEW RECORD";
+        resultUIText.color = Color.green;
+        resultCountdownUIText.text = roundCountdownUIText.text;
+        resultCountdownUIText.color = Color.green;
+        int countdown = 2;
+        StartCoroutine(OnLevelExpUpToStart(countdown, true));
+
+        
+
+    }
+
+    IEnumerator OnLevelExpUpToStart(int _countdown, bool isSuccess)
+    {
+
+        levelUIText.text = string.Format("LEVEL\n{0}", level);
+        levelExpUIText.text = string.Format("{0} / {1}", levelEXP.ToString(), nextLevelEXP.ToString());
+        levelExpFillHUD.fillAmount = levelEXP / nextLevelEXP;
+
+        if (levelEXP + GetDivisionEXP(lastDivisionUsed) > nextLevelEXP)
+        {
+
+            level++;
+
+        }
+
+        while (_countdown > 0)
+        {
+
+            yield return new WaitForSeconds(1f);
+
+            _countdown--;
+
+        }
+
+        levelEXP += isSuccess
+                ? GetDivisionEXP(lastDivisionUsed)
+                : 750;
+        
+        levelUIText.text = string.Format("LEVEL\n{0}", level);
+        levelExpUIText.text = string.Format("{0} / {1}", levelEXP.ToString(), nextLevelEXP.ToString());
+        levelExpFillHUD.fillAmount = levelEXP / nextLevelEXP;
+        levelExpUpUIText.text = string.Format("+{0}", levelEXP);
+
+    }
+
+    private int GetDivisionEXP(int _division)
+    {
+
+        return _division switch
+        {
+
+            1 => 300,
+
+            2 => 500,
+
+            _ => 150,
+
+        };
 
     }
 
